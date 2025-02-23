@@ -38,7 +38,7 @@ export const projects: Project[] = [
       pl: "Portfolio z efektami w stylu Matrix zbudowane przy użyciu React",
       en: "Personal portfolio with Matrix-style animations built using React",
     },
-    link: "https://github.com/portfolio",
+    link: "https://github.com/darek9k/portfolio",
     demo: "https://portfolio.bieda.it",
   },
   {
@@ -47,7 +47,9 @@ export const projects: Project[] = [
       pl: "Jak nie dać się zwariować i stworzyć skalowalną strukturę do stabilnych testów.",
       en: "How to avoid going crazy and create a scalable structure for stable testing.",
     },
-    link: "https://github.com/playwright-maf",
-    demo: "https://portfolio.bieda.it",
+    link: "",
+    demo: "",
+    // link: "https://github.com/playwright-maf",
+    // demo: "https://portfolio.bieda.it",
   },
 ];

@@ -42,28 +42,32 @@ const Projects = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="flex flex-row space-x-2">
-                      <a
-                        href={project.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-sm transition-all duration-300 hover:-translate-y-1"
-                      >
-                        <SiGithub className="w-4 h-4 text-[var(--matrix-light)]" />
-                        <span className="text-[var(--matrix-white)]">
-                          {projectsMessages.sourceCode[lang]}
-                        </span>
-                      </a>
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center space-x-2 text-sm transition-all duration-300 hover:-translate-y-1"
-                      >
-                        <ExternalLink className="w-4 h-4 text-[var(--matrix-light)]" />
-                        <span className="text-[var(--matrix-white)]">
-                          {projectsMessages.liveDemo[lang]}
-                        </span>
-                      </a>
+                      {project.link && project.link.trim() !== "" && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-2 text-sm transition-all duration-300 hover:-translate-y-1"
+                        >
+                          <SiGithub className="w-4 h-4 text-[var(--matrix-light)]" />
+                          <span className="text-[var(--matrix-white)]">
+                            {projectsMessages.sourceCode[lang]}
+                          </span>
+                        </a>
+                      )}
+                      {project.demo && project.demo.trim() !== "" && (
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-2 text-sm transition-all duration-300 hover:-translate-y-1"
+                        >
+                          <ExternalLink className="w-4 h-4 text-[var(--matrix-light)]" />
+                          <span className="text-[var(--matrix-white)]">
+                            {projectsMessages.liveDemo[lang]}
+                          </span>
+                        </a>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
