@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Download } from "lucide-react";
 import { useLanguage } from "../../shared/components/common/LanguageContext";
@@ -7,6 +8,23 @@ import { referencesMessages } from "./data";
 
 function References(): JSX.Element {
     const { lang } = useLanguage();
+    const [isMobile, setIsMobile] = useState(false);
+    const [iframeKey, setIframeKey] = useState(Date.now());
+
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth < 768;
+            setIsMobile(mobile);
+
+            if (!mobile) {
+                setIframeKey(Date.now());
+            }
+        };
+
+        handleResize(); // ustaw przy starcie
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     return (
         <>
@@ -31,18 +49,23 @@ function References(): JSX.Element {
                         <span>{referencesMessages.downloadButton[lang]}</span>
                     </a>
                 </motion.div>
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="w-full h-[80vh] border-2 border-[var(--matrix-dark)] rounded-md overflow-hidden"
-                >
-                    <iframe
-                        src="/assets/referencje.pdf"
-                        title="Podgląd referencji"
-                        className="w-full h-full"
-                    />
-                </motion.div>
-            </div >
+
+                {/* Render iframe tylko na urządzeniach stacjonarnych */}
+                {!isMobile ? (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="w-full">
+                        <iframe
+                            key={iframeKey}
+                            src="/assets/referencje.pdf"
+                            title="Podgląd referencji"
+                            className="w-full min-h-[400px] sm:min-h-[600px] md:min-h-[800px]"
+                        />
+                    </motion.div>
+                ) : (
+                    <div className="w-full text-center text-[var(--matrix-white)]">
+                        Podgląd referencji jest dostępny tylko na urządzeniach stacjonarnych.
+                    </div>
+                )}
+            </div>
         </>
     );
 }
