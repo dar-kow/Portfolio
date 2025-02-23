@@ -1,7 +1,7 @@
 export const homeMessages = {
     welcome: {
-        pl: "Witaj na mojej stronie!",
-        en: "Welcome to my website!",
+        pl: "Witaj w moim portfolio!",
+        en: "Welcome to my portfolio!",
     },
     projects: {
         pl: "Poznaj moje projekty:",
