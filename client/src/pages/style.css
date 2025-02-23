@@ -1,0 +1,19 @@
+body {
+    background-color: var(--matrix-bg);
+    color: var(--matrix-light);
+    font-family: sans-serif;
+  }
+  .page-container a {
+    color: #80ce87; /* kolor linków - Matrixowy akcent */
+  }
+
+.prose {
+    max-width: 100ch;
+    line-height: 1.6;
+  }
+  .prose code {
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+  }
