@@ -1,0 +1,38 @@
+.toast-container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+}
+
+.toast {
+  background-color: var(--matrix-bg);
+  color: var(--matrix-light);
+  border: 1px solid var(--matrix-primary);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  animation:
+    slidein 0.3s ease-out,
+    fadeout 0.3s ease-out 1.7s forwards;
+}
+
+/* Animacja wjazdu toastu */
+@keyframes slidein {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
