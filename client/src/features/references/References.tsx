@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, X } from "lucide-react";
+import { Download, X, FileSearch } from "lucide-react";
 import { useLanguage } from "../../shared/components/common/LanguageContext";
 import MatrixEffect from "@/shared/components/common/MatrixRain";
 import { getMatrixColors } from "../articles/Articles";
@@ -24,11 +24,7 @@ function References(): JSX.Element {
         <>
             <MatrixEffect immediate bgOpacity={0.2} matrixColors={getMatrixColors()} />
             <div className="references-container relative z-10 p-4 md:p-8 md:pl-72 space-y-6">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="space-y-4"
-                >
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
                     <h1 className="references-title text-[var(--matrix-primary)] text-3xl font-bold">
                         {referencesMessages.title[lang]}
                     </h1>
@@ -38,32 +34,30 @@ function References(): JSX.Element {
                     <p className="text-[var(--matrix-white)] text-sm md:text-base leading-relaxed mt-2">
                         {referencesMessages.longDescription[lang]}
                     </p>
-                    <div className="flex items-center space-x-2">
-                        <div className="flex flex-col items-center space-y-2">
-                            {/* Miniaturka widoczna tylko na desktopie z tooltipem */}
-                            {!isMobile && (
-                                <div className="relative inline-block group border border-[var(--matrix-dark)] p-1 hover:shadow-md transition">
-                                    <button onClick={() => setModalOpen(true)}>
-                                        <img
-                                            src="/assets/pdf-thumbnail.jpg"
-                                            alt={lang === "pl" ? "Podgląd referencji" : "PDF Preview"}
-                                            className="w-32"
-                                        />
-                                    </button>
-                                    <span className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mb-2 rounded bg-[var(--matrix-dark)] text-[var(--matrix-white)] text-sm px-3 py-2 opacity-0 group-hover:opacity-100 transition">
-                                        {lang === "pl" ? "Podgląd referencji" : "PDF Preview"}
-                                    </span>
+                    <div className="flex items-center space-x-4">
+                        {/* Podgląd referencji */}
+                        {!isMobile && (
+                            <div className="relative inline-block group border border-[var(--matrix-dark)] p-1 hover:shadow-md transition">
+                                <button onClick={() => setModalOpen(true)}>
+                                    <div className="flex items-center justify-center w-16 h-16">
+                                        <FileSearch className="w-10 h-10 text-[var(--matrix-light)]" />
+                                    </div>
+                                </button>
+                                <span className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mb-2 rounded bg-[var(--matrix-dark)] text-[var(--matrix-white)] text-sm px-3 py-2 opacity-0 group-hover:opacity-100 transition">
+                                    {lang === "pl" ? "Podgląd referencji" : "PDF Preview"}
+                                </span>
+                            </div>
+                        )}
+                        {/* Pobieranie PDF */}
+                        <div className="relative inline-block group border border-[var(--matrix-dark)] p-1 hover:shadow-md transition">
+                            <a href="/assets/referencje.pdf" download>
+                                <div className="flex items-center justify-center w-16 h-16">
+                                    <Download className="w-10 h-10 text-[var(--matrix-light)]" />
                                 </div>
-                            )}
-                            {/* Przycisk pobierania umieszczony pod miniaturką */}
-                            <a
-                                href="/assets/referencje.pdf"
-                                download
-                                className="flex items-center space-x-1 text-[var(--matrix-white)] hover:text-[var(--matrix-primary)] transition"
-                            >
-                                <Download className="w-4 h-4" />
-                                <span>{referencesMessages.downloadButton[lang]}</span>
                             </a>
+                            <span className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full mb-2 rounded bg-[var(--matrix-dark)] text-[var(--matrix-white)] text-sm px-3 py-2 opacity-0 group-hover:opacity-100 transition">
+                                Pobierz PDF
+                            </span>
                         </div>
                     </div>
                 </motion.div>

@@ -15,6 +15,8 @@ const articleMap: Record<string, () => Promise<string>> = {
         import("../../pages/portfolio-matrix-react.md?raw").then((mod) => mod.default),
     "portfolio-idea": () =>
         import("../../pages/portfolio-idea.md?raw").then((mod) => mod.default),
+    "learning-coding-and-AI": () =>
+        import("../../pages/learning-coding-and-AI.md?raw").then((mod) => mod.default),
 };
 
 const ArticlePage = () => {

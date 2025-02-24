@@ -55,4 +55,16 @@ export const articles: Article[] = [
     },
     link: "/articles/portfolio-idea",
   },
+  {
+    title: {
+      pl: "Ślęczenie nad kodem w 2025 - sensowne czy przestarzałe?",
+      en: "Poring Over Code in 2025 - Sensible or Outdated?",
+    },
+    date: "2025-02-24",
+    description: {
+      pl: "Czy warto ślęczeć nad kodem w erze AI, czyli programista kontra maszyna",
+      en: "Is it worth poring over code in the era of AI, or programmer vs. machine?",
+    },
+    link: "/articles/learning-coding-and-AI",
+  },
 ];
