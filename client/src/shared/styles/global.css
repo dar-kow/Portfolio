@@ -323,6 +323,14 @@
 
 /* markodown hacks :P */
 
+.markdown-body {
+  background-color: var(--matrix-bg);
+  color: var(--matrix-white);
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
+
 .markdown-body h1::first-line {
   color: var(--matrix-primary);
 }
@@ -341,4 +349,12 @@
 
 .markdown-body strong {
   color: #f59e0b;
+}
+
+.markdown-body pre,
+.markdown-body code {
+  background-color: var(--matrix-darker);
+  color: var(--matrix-white);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
 }

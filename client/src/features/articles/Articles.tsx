@@ -40,7 +40,7 @@ const Articles = () => {
               >
                 <Link href={article.link}>
                   <a>
-                    <Card className="cursor-pointer bg-[--matrix-black] border border-[var(--matrix-dark)] hover:shadow-[0_0_8px_#80ce87] transition-all duration-200">
+                    <Card className="cursor-pointer bg-[var(--matrix-bg)] border border-[var(--matrix-dark)] hover:shadow-[0_0_8px_#80ce87] transition-all duration-200">
                       <CardHeader>
                         <div className="text-sm text-[var(--matrix-white)]">{article.date}</div>
                         <CardTitle className="text-[var(--matrix-white)] text-xl font-bold">
