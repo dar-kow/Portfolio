@@ -67,4 +67,16 @@ export const articles: Article[] = [
     },
     link: "/articles/learning-coding-and-AI",
   },
+  {
+    title: {
+      pl: "Reverse Proxy z NGINX",
+      en: "Jak to ugryźć? | SPA + Reverse Proxy z NGINX",
+    },
+    date: "2025-02-25",
+    description: {
+      pl: "Jak to ugryźć? | SPA + Reverse Proxy z NGINX",
+      en: "How to get it? | SPA + Reverse Proxy with NGINX",
+    },
+    link: "/articles/reverse-proxy-nginx",
+  },
 ];

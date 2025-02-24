@@ -17,6 +17,8 @@ const articleMap: Record<string, () => Promise<string>> = {
         import("../../pages/portfolio-idea.md?raw").then((mod) => mod.default),
     "learning-coding-and-AI": () =>
         import("../../pages/learning-coding-and-AI.md?raw").then((mod) => mod.default),
+    "reverse-proxy-nginx": () =>
+        import("../../pages/reverse-proxy-nginx.md?raw").then((mod) => mod.default),
 };
 
 const ArticlePage = () => {
