@@ -1,5 +1,5 @@
 import React from "react";
-import { Home, Folder, BookOpen, Code, FileText } from "lucide-react";
+import { Home, Folder, BookOpen, Code, FileText, HelpCircle, FileCode2 } from "lucide-react";
 
 export const contactMessages = {
     contactButton: {
@@ -13,11 +13,27 @@ export type LocalizedLabel = {
     en: string;
 };
 
+export type SubMenuItem = {
+    path: string;
+    label: LocalizedLabel;
+};
+
 export type MenuItem = {
     path: string;
     label: LocalizedLabel;
     icon: React.ReactNode;
+    subMenu?: SubMenuItem[];
 };
+
+// Dodanie nowej sekcji "Jak to robię?"
+export const howIDoItSubMenu: SubMenuItem[] = [
+    { path: "/how-i-do-it/test-plan", label: { pl: "Plan testów", en: "Test Plan" } },
+    { path: "/how-i-do-it/test-scenario", label: { pl: "Scenariusz testowy", en: "Test Scenario" } },
+    { path: "/how-i-do-it/test-case", label: { pl: "Przypadek testowy", en: "Test Case" } },
+    { path: "/how-i-do-it/playwright-class", label: { pl: "Playwright (TS klasy)", en: "Playwright (TS Classes)" } },
+    { path: "/how-i-do-it/playwright-func", label: { pl: "Playwright (TS funkcje)", en: "Playwright (TS Functions)" } },
+    { path: "/how-i-do-it/bug-reporting", label: { pl: "Zgłaszanie błędów", en: "Bug Reporting" } },
+];
 
 export const menuItems: MenuItem[] = [
     { path: "/", label: { pl: "Home", en: "Home" }, icon: <Home className="w-5 h-5" /> },
@@ -28,6 +44,12 @@ export const menuItems: MenuItem[] = [
         path: "/references",
         label: { pl: "Referencje", en: "References" },
         icon: <FileText className="w-5 h-5" />,
+    },
+    {
+        path: "/how-i-do-it",
+        label: { pl: "Jak to robię?", en: "How I Do It?" },
+        icon: <HelpCircle className="w-5 h-5" />,
+        subMenu: howIDoItSubMenu,
     },
 ];
 
