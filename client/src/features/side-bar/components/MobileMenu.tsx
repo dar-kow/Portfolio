@@ -1,11 +1,11 @@
 import { Link } from "wouter";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { SiGithub, SiLinkedin } from "react-icons/si";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
 import { Mail } from "lucide-react";
 import { menuItems, contactMessages, socialLinks } from "../data";
 import { useLanguage } from "../../../shared/components/common/LanguageContext";
-import React from "react";
+import React, { useState } from "react";
 
 interface MobileMenuProps {
     isOpen: boolean;
@@ -23,17 +23,24 @@ function MobileMenu({
     showMobileMenu,
 }: MobileMenuProps): JSX.Element {
     const { lang, toggleLang } = useLanguage();
+    const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+
+    const toggleSubMenu = (path: string, e: React.MouseEvent) => {
+        e.preventDefault();
+        setExpandedMenu(expandedMenu === path ? null : path);
+    };
 
     return (
         <>
+            {/* Pasek nawigacyjny mobilny - zawsze widoczny z odpowiednim z-index */}
             <motion.div
                 initial={{ y: 0 }}
                 animate={{ y: showMobileMenu ? 0 : -100 }}
                 transition={{ duration: 0.3 }}
                 className="sidebar-mobile-icons mobile-menu md:hidden fixed top-0 left-0 right-0 flex items-center justify-between px-4 z-50"
             >
-                {/* Lewy kontener z hamburgerem */}
-                <div className="hamburger-container">
+                {/* Lewy kontener z hamburgerem - z odpowiednim z-index */}
+                <div className="hamburger-container relative z-[60]">
                     <button onClick={() => setIsOpen(!isOpen)} className="sidebar-hamburger">
                         {isOpen ? (
                             <X className="w-6 h-6 text-[var(--matrix-hover)]" />
@@ -64,49 +71,98 @@ function MobileMenu({
                     >
                         <SiLinkedin className="w-6 h-6" />
                     </a>
-                    {/* Możesz usunąć przycisk zmiany języka z tego kontenera,
-              jeśli chcesz, aby był wyświetlany tylko jako fixed component */}
                 </div>
             </motion.div>
 
-            {isOpen && (
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    className="mobile-menu-modal"
-                >
-                    <div className="mobile-menu-modal-overlay" onClick={() => setIsOpen(false)} />
-                    <motion.div className="mobile-menu-modal-content" initial={{ y: -30 }} animate={{ y: 0 }}>
-                        <nav className="space-y-4">
-                            {menuItems.map((item) => (
-                                <Link key={item.path} href={item.path}>
-                                    <a
-                                        className={`sidebar-nav-link ${window.location.pathname === item.path ? "sidebar-nav-link-active" : "sidebar-nav-link-inactive"
-                                            }`}
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        {item.icon}
-                                        <span>{item.label[lang]}</span>
-                                    </a>
-                                </Link>
-                            ))}
-                            <button
-                                onClick={() => {
-                                    setIsOpen(false);
-                                    setIsContactOpen(true);
-                                }}
-                                className="sidebar-nav-link-contact"
-                            >
-                                <Mail className="w-5 h-5" />
-                                <span>{contactMessages.contactButton[lang]}</span>
-                            </button>
-                        </nav>
-                    </motion.div>
-                </motion.div>
-            )}
+            {/* Menu mobilne - warstwa poniżej hamburgerka */}
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="mobile-menu-modal"
+                        style={{ zIndex: 55 }}
+                    >
+                        <div className="mobile-menu-modal-overlay" onClick={() => setIsOpen(false)} />
+                        {/* TO DO pobawić się z miejscem pojawiania się menu */}
+                        <motion.div className="mobile-menu-modal-content w-[250px] max-w-[300px]" initial={{ x: 35, y: -35 }} animate={{ y: 0 }}>
+                            <nav className="space-y-4">
+                                {menuItems.map((item) => (
+                                    <div key={item.path} className="flex flex-col">
+                                        {item.subMenu ? (
+                                            // Pozycja z podmenu
+                                            <a
+                                                href="#"
+                                                className={`sidebar-nav-link ${window.location.pathname.startsWith(item.path) ? "sidebar-nav-link-active" : "sidebar-nav-link-inactive"}`}
+                                                onClick={(e) => toggleSubMenu(item.path, e)}
+                                            >
+                                                <div className="flex items-center justify-between w-full">
+                                                    <div className="flex items-center">
+                                                        {item.icon}
+                                                        <span className="ml-2">{item.label[lang]}</span>
+                                                    </div>
+                                                    {expandedMenu === item.path ?
+                                                        <ChevronUp className="w-4 h-4" /> :
+                                                        <ChevronDown className="w-4 h-4" />
+                                                    }
+                                                </div>
+                                            </a>
+                                        ) : (
+                                            // Zwykła pozycja menu
+                                            <Link href={item.path}>
+                                                <a
+                                                    className={`sidebar-nav-link ${window.location.pathname === item.path ? "sidebar-nav-link-active" : "sidebar-nav-link-inactive"}`}
+                                                    onClick={() => setIsOpen(false)}
+                                                >
+                                                    {item.icon}
+                                                    <span>{item.label[lang]}</span>
+                                                </a>
+                                            </Link>
+                                        )}
 
-            {/* Fixed Mobile Language Toggle Button */}
+                                        {/* Podmenu */}
+                                        <AnimatePresence>
+                                            {item.subMenu && expandedMenu === item.path && (
+                                                <motion.div
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: "auto", opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    className="ml-6 mt-1 overflow-hidden"
+                                                >
+                                                    {item.subMenu.map((subItem) => (
+                                                        <Link key={subItem.path} href={subItem.path}>
+                                                            <a
+                                                                className={`sidebar-nav-link text-sm py-1.5 pl-2 ${window.location.pathname === subItem.path ? 'sidebar-nav-link-active' : 'sidebar-nav-link-inactive'}`}
+                                                                onClick={() => setIsOpen(false)}
+                                                            >
+                                                                <span>{subItem.label[lang]}</span>
+                                                            </a>
+                                                        </Link>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </div>
+                                ))}
+                                {/* nadmiarowe ale implementację zostawiam */}
+                                {/* <button
+                                    onClick={() => {
+                                        setIsOpen(false);
+                                        setIsContactOpen(true);
+                                    }}
+                                    className="sidebar-nav-link-contact"
+                                >
+                                    <Mail className="w-5 h-5" />
+                                    <span>{contactMessages.contactButton[lang]}</span>
+                                </button> */}
+                            </nav>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Fixed Mobile Language Toggle Button - zachowany bez zmian */}
             <div className="md:hidden">
                 <button
                     onClick={toggleLang}
