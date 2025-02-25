@@ -8,6 +8,7 @@ export type LocalizedString = {
 export type Skill = {
   name: LocalizedString;
   level: number;
+  description?: LocalizedString;
 };
 
 export type LearningItem = {
@@ -43,6 +44,14 @@ export const skills: Skill[] = [
   { name: { pl: "Docker", en: "Docker" }, level: 50 },
   { name: { pl: "Paca zespołowa i komunikacja", en: "Teamwork and Communication" }, level: 80 },
   { name: { pl: "Publikowanie artykułów", en: "Publication of Articles" }, level: 60 },
+  {
+    name: { pl: "AI jako wsparcie w testach i inżynierii promptów", en: "AI-Augmented Test Automation & Prompt Engineering" },
+    level: 60,
+    description: {
+      pl: "Wykorzystuję AI do optymalizacji testów automatycznych i analizy kodu, usprawniając procesy QA. Korzystam z narzędzi AI do generowania scenariuszy testowych, analizy logów i wykrywania anomalii, jednocześnie dbając o ich walidację i poprawność.",
+      en: "I utilize AI to optimize automated testing and code analysis, improving QA processes. I leverage AI tools for test scenario generation, log analysis, and anomaly detection while ensuring their validation and accuracy.",
+    },
+  },
 ];
 
 export const learning: LearningItem[] = [

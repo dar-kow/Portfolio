@@ -55,17 +55,22 @@ const Skills = () => {
                 <Card className="h-full bg-transparent border-0 shadow-none">
                   <CardContent>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium  text-[#e5e0d6]">
+                      <span className="text-sm font-medium text-[#e5e0d6]">
                         {skill.name[lang]}
                       </span>
-                      <span className="text-sm text-[#e5e0d6]">{skill.level}%</span>
+                      <span className="text-sm text-[#e5e0d6]">
+                        {skill.level}%
+                      </span>
                     </div>
-                    {/* Use the primary modifier class here */}
                     <AnimatedProgressBar
                       percentage={skill.level}
                       modifierClass="progress-fill-primary"
                       delay={index * 0.1}
                     />
+                    {/* Dodanie opisu pod paskiem postępu */}
+                    <p className="mt-1 text-[#e5e0d6]">
+                      {skill.description?.[lang] || ''}
+                    </p>
                   </CardContent>
                 </Card>
               </motion.div>
