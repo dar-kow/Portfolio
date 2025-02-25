@@ -70,7 +70,7 @@ export const articles: Article[] = [
   {
     title: {
       pl: "Reverse Proxy z NGINX",
-      en: "Jak to ugryźć? | SPA + Reverse Proxy z NGINX",
+      en: "Reverse Proxy z NGINX",
     },
     date: "2025-02-25",
     description: {
