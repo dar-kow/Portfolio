@@ -1,5 +1,3 @@
-import React from "react";
-
 export type LocalizedString = {
   pl: string;
   en: string;
@@ -45,7 +43,7 @@ export const skills: Skill[] = [
   { name: { pl: "Paca zespołowa i komunikacja", en: "Teamwork and Communication" }, level: 80 },
   { name: { pl: "Publikowanie artykułów", en: "Publication of Articles" }, level: 60 },
   {
-    name: { pl: "AI jako wsparcie w testach i inżynierii promptów", en: "AI-Augmented Test Automation & Prompt Engineering" },
+    name: { pl: "AI jako wsparcie w testach", en: "AI-Augmented Test Automation & Prompt Engineering" },
     level: 60,
     description: {
       pl: "Wykorzystuję AI do optymalizacji testów automatycznych i analizy kodu, usprawniając procesy QA. Korzystam z narzędzi AI do generowania scenariuszy testowych, analizy logów i wykrywania anomalii, jednocześnie dbając o ich walidację i poprawność.",
