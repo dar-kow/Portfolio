@@ -46,7 +46,7 @@ export const menuItems: MenuItem[] = [
     },
     {
         path: "/how-i-do-it",
-        label: { pl: "Jak to robię:", en: "How I Do It:" },
+        label: { pl: "Jak to robię", en: "How I Do It" },
         icon: <HelpCircle className="w-5 h-5" />,
         subMenu: howIDoItSubMenu,
     },
