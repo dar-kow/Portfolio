@@ -1,4 +1,4 @@
-### Istotnym aspektem rozwoju oprogramowania jest właściwe raportowaniu błędów 
+### Istotnym aspektem rozwoju oprogramowania jest właściwe raportowaniu błędów
 
 **[ECOMMERCE] Błąd logiczny przy anulowaniu zamówienia: wyjątek przy próbie zwrotu całkowitej kwoty ("Wartość refundacji nie może przekraczać kwoty zamówienia")**
 
