@@ -4,26 +4,44 @@ import MatrixEffect from "@/shared/components/common/MatrixRain";
 import { getMatrixColors } from "./Articles";
 import { useMarkdownContent } from "@/shared/hooks/useMarkdownContent";
 import { MarkdownRenderer } from "@/shared/components/markdown/MarkdownRenderer";
-
-const articleMap: Record<string, () => Promise<string>> = {
-    "avoiding-wait-for-timeout": () =>
-        import("../../pages/avoiding-wait-for-timeout.md?raw").then((mod) => mod.default),
-    "matrix-portfolio": () =>
-        import("../../pages/portfolio-matrix-react.md?raw").then((mod) => mod.default),
-    "portfolio-idea": () =>
-        import("../../pages/portfolio-idea.md?raw").then((mod) => mod.default),
-    "learning-coding-and-AI": () =>
-        import("../../pages/learning-coding-and-AI.md?raw").then((mod) => mod.default),
-    "reverse-proxy-nginx": () =>
-        import("../../pages/reverse-proxy-nginx.md?raw").then((mod) => mod.default),
-};
+import { useLanguage } from "@/shared/components/common/LanguageContext";
+import { useMemo } from "react";
 
 const ArticlePage = () => {
     const [location] = useLocation();
+    const { lang } = useLanguage();
     const slug = location.split("/").pop() || "avoiding-wait-for-timeout";
+
+    const fileSuffix = lang === "en" ? "-en" : "";
+
+    const articleMap = useMemo(() => {
+        return {
+            "avoiding-wait-for-timeout": () =>
+                import(`../../pages/avoiding-wait-for-timeout${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/avoiding-wait-for-timeout.md?raw`).then((mod) => mod.default)),
+            "matrix-portfolio": () =>
+                import(`../../pages/portfolio-matrix-react${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/portfolio-matrix-react.md?raw`).then((mod) => mod.default)),
+            "portfolio-idea": () =>
+                import(`../../pages/portfolio-idea${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/portfolio-idea.md?raw`).then((mod) => mod.default)),
+            "learning-coding-and-AI": () =>
+                import(`../../pages/learning-coding-and-AI${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/learning-coding-and-AI.md?raw`).then((mod) => mod.default)),
+            "reverse-proxy-nginx": () =>
+                import(`../../pages/reverse-proxy-nginx${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/reverse-proxy-nginx.md?raw`).then((mod) => mod.default)),
+        };
+    }, [fileSuffix]);
+
     const { markdownContent, isLoading } = useMarkdownContent({
         contentMap: articleMap,
-        slug
+        slug,
     });
 
     return (
