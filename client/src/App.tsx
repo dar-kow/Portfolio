@@ -11,6 +11,7 @@ import Projects from "@/features/projects/Projects";
 import Skills from "@/features/skills/Skills";
 import ArticlePage from "@/features/articles/ArticlePage";
 import References from "@/features/references/References";
+import HowIDoItPage from "./features/how-i-do-it/HowIDoItPage";
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/projects" component={Projects} />
       <Route path="/skills" component={Skills} />
       <Route path="/references" component={References} />
+      <Route path="/how-i-do-it/:page*" component={HowIDoItPage} />
       <Route component={NotFound} />
     </Switch>
   );
