@@ -358,3 +358,91 @@
   padding: 0.5rem;
   border-radius: 0.25rem;
 }
+
+.markdown-body .mermaid {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.markdown-body .mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-body ol {
+  list-style-type: decimal !important;
+  margin-left: 1.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.markdown-body ol li {
+  margin-bottom: 0.25rem !important;
+}
+
+.markdown-body ul {
+  list-style-type: disc !important;
+  margin-left: 1.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+/* Upewnij się, że liczby są widoczne */
+.markdown-body ol li::marker {
+  color: var(--matrix-light) !important;
+  font-weight: bold !important;
+}
+
+/* Style dla linków Markdown */
+.markdown-body a {
+  color: var(--matrix-primary) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease-in-out;
+}
+
+.markdown-body a:hover {
+  color: var(--matrix-hover) !important;
+  border-bottom: 1px solid var(--matrix-hover) !important;
+}
+
+/* Style dla kotwic nagłówków */
+.markdown-body h1 .anchor-link,
+.markdown-body h2 .anchor-link,
+.markdown-body h3 .anchor-link,
+.markdown-body h4 .anchor-link,
+.markdown-body h5 .anchor-link,
+.markdown-body h6 .anchor-link {
+  opacity: 0;
+  color: var(--matrix-primary) !important;
+  transition: opacity 0.2s ease;
+  border-bottom: none !important;
+}
+
+.markdown-body h1:hover .anchor-link,
+.markdown-body h2:hover .anchor-link,
+.markdown-body h3:hover .anchor-link,
+.markdown-body h4:hover .anchor-link,
+.markdown-body h5:hover .anchor-link,
+.markdown-body h6:hover .anchor-link {
+  opacity: 1;
+}
+
+/* Nadpisanie wszystkich stylów dla linków w github-markdown-css */
+.markdown-body a:link,
+.markdown-body a:visited,
+.markdown-body a:active,
+.markdown-body a:focus {
+  color: var(--matrix-primary) !important;
+}
+
+/* Matrix link style */
+.matrix-link {
+  color: var(--matrix-primary) !important;
+  text-decoration: none !important; 
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-bottom 0.2s;
+}
+
+.matrix-link:hover {
+  color: var(--matrix-hover) !important;
+  border-bottom: 1px solid var(--matrix-hover) !important;
+}
