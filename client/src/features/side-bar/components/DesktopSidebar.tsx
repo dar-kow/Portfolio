@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { Link } from "wouter"; // Upewnij się, że używasz Link z tej samej biblioteki co w reszcie aplikacji
 import SidebarNavLink from "../components/SidebarNavLink";
 import { menuItems, contactMessages, socialLinks, LocalizedLabel } from "../data";
 
@@ -16,6 +17,15 @@ interface DesktopSidebarProps {
 
 function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: DesktopSidebarProps): JSX.Element {
     const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+
+    // Automatycznie rozwijaj menu na podstawie aktualnej ścieżki
+    useEffect(() => {
+        menuItems.forEach(item => {
+            if (item.subMenu && location.startsWith(item.path)) {
+                setExpandedMenu(item.path);
+            }
+        });
+    }, [location]);
 
     const toggleSubMenu = (path: string) => {
         setExpandedMenu(expandedMenu === path ? null : path);
@@ -63,19 +73,20 @@ function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: Deskto
                             <AnimatePresence>
                                 {item.subMenu && expandedMenu === item.path && (
                                     <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
+                                        initial={{ height: 0, opacity: 0, y: 10 }}
                                         animate={{ height: "auto", opacity: 1 }}
                                         exit={{ height: 0, opacity: 0 }}
                                         className="ml-5 overflow-hidden"
                                     >
                                         {item.subMenu.map((subItem) => (
-                                            <a
+                                            <Link
                                                 key={subItem.path}
                                                 href={subItem.path}
-                                                className={`sidebar-nav-link text-sm py-1.5 ${location === subItem.path ? 'sidebar-nav-link-active' : 'sidebar-nav-link-inactive'}`}
                                             >
-                                                <span className="ml-2">{subItem.label[lang]}</span>
-                                            </a>
+                                                <a className={`sidebar-nav-link text-sm py-1.5 ${location === subItem.path ? 'sidebar-nav-link-active' : 'sidebar-nav-link-inactive'}`}>
+                                                    <span className="ml-2">{subItem.label[lang]}</span>
+                                                </a>
+                                            </Link>
                                         ))}
                                     </motion.div>
                                 )}
@@ -84,7 +95,7 @@ function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: Deskto
                     ))}
                 </nav>
 
-                {/* Language Toggle Button for Desktop */}
+                {/* Pozostałe elementy bez zmian */}
                 <div className="mb-4 flex justify-center">
                     <button
                         onClick={toggleLang}
@@ -94,14 +105,12 @@ function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: Deskto
                     </button>
                 </div>
 
-                {/* Kontakt Button on Desktop */}
                 <div className="mb-4">
                     <button onClick={() => setIsContactOpen(true)} className="sidebar-desktop-kontakt">
                         {contactMessages.contactButton[lang]}
                     </button>
                 </div>
 
-                {/* Social Icons on Desktop */}
                 <div className="sidebar-desktop-social flex justify-center space-x-4">
                     <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" className="sidebar-mobile-icon-button">
                         <SiGithub className="w-6 h-6" />
