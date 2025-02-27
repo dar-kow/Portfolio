@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from "framer-motion";
 import { SiGithub, SiLinkedin } from "react-icons/si";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { Link } from "wouter"; // Upewnij się, że używasz Link z tej samej biblioteki co w reszcie aplikacji
+import { Link } from "wouter";
 import SidebarNavLink from "../components/SidebarNavLink";
 import { menuItems, contactMessages, socialLinks, LocalizedLabel } from "../data";
 
@@ -18,7 +18,6 @@ interface DesktopSidebarProps {
 function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: DesktopSidebarProps): JSX.Element {
     const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
 
-    // Automatycznie rozwijaj menu na podstawie aktualnej ścieżki
     useEffect(() => {
         menuItems.forEach(item => {
             if (item.subMenu && location.startsWith(item.path)) {
