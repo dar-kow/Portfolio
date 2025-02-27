@@ -16,14 +16,13 @@ const Home = () => {
   const [startAnimation, setStartAnimation] = useState(false);
 
   useEffect(() => {
-    // Loader pokaże się przez 2000ms
     const loaderTimeout = setTimeout(() => {
       setLoading(false);
-    }, 1500);
+    }, 500);
 
     const animationTimeout = setTimeout(() => {
       setStartAnimation(true);
-    }, 2000);
+    }, 100);
 
     return () => {
       clearTimeout(loaderTimeout);
