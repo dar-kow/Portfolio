@@ -18,8 +18,10 @@ When performing the order cancellation procedure with the "Refund All" option, a
 * The cancellation operation with the "Refund All" option completes successfully in the interface, but an exception is generated in the logs.
 
 **Error logs:**
-```
-ERROR [RefundService] (transaction-handler-thread): Transaction error: Value cannot exceed original order amount at com.onlineshop.payment.RefundProcessor.validateAmount(RefundProcessor.java:142) at com.onlineshop.payment.RefundProcessor.processFullRefund(RefundProcessor.java:89)
+```typescript
+ERROR [RefundService] (transaction-handler-thread): Transaction error: Value cannot exceed original order amount 
+at com.onlineshop.payment.RefundProcessor.validateAmount(RefundProcessor.java:142) 
+at com.onlineshop.payment.RefundProcessor.processFullRefund(RefundProcessor.java:89)
 ```
 
 **[INVENTORY] Product status in the Warehouse panel doesn't update after delivery approval**
