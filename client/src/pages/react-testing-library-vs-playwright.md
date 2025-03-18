@@ -116,3 +116,129 @@ module.exports = {
 import '@testing-library/jest-dom';
 ```
 
+### Konfiguracja Playwright dla testowania komponentów
+
+```javascript
+// package.json
+{
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@playwright/experimental-ct-react": "^1.40.0",
+    "@playwright/test": "^1.40.0"
+  }
+}
+```
+
+```javascript
+// playwright-ct.config.ts
+import { defineConfig } from '@playwright/experimental-ct-react';
+import { resolve } from 'path';
+
+export default defineConfig({
+  testDir: './tests',
+  use: {
+    ctPort: 3100,
+    ctViteConfig: {
+      resolve: {
+        alias: {
+          '@': resolve(__dirname, './src'),
+        },
+      },
+    },
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { browserName: 'chromium' },
+    },
+    {
+      name: 'firefox',
+      use: { browserName: 'firefox' },
+    },
+    {
+      name: 'webkit',
+      use: { browserName: 'webkit' },
+    },
+  ],
+});
+```
+
+```typescript
+// playwright/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testing with Playwright</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="./index.tsx"></script>
+</body>
+</html>
+```
+
+## Podstawowe przypadki testowe
+
+### React Testing Library
+
+```javascript
+// Testowanie renderowania komponentu
+import { render, screen } from '@testing-library/react';
+import UserProfile from './UserProfile';
+
+test('wyświetla dane użytkownika poprawnie', () => {
+  const user = {
+    name: 'Jan Kowalski',
+    email: 'jan@example.com',
+    role: 'Developer'
+  };
+  
+  render(<UserProfile user={user} />);
+  
+  expect(screen.getByText('Jan Kowalski')).toBeInTheDocument();
+  expect(screen.getByText('jan@example.com')).toBeInTheDocument();
+  expect(screen.getByText('Developer')).toBeInTheDocument();
+});
+
+// Testowanie warunkowego renderowania
+test('wyświetla komunikat, gdy brak danych użytkownika', () => {
+  render(<UserProfile />);
+  
+  expect(screen.getByText(/brak danych użytkownika/i)).toBeInTheDocument();
+});
+```
+
+### Playwright
+
+```javascript
+// Testowanie renderowania komponentu
+import { test, expect } from '@playwright/experimental-ct-react';
+import UserProfile from './UserProfile';
+
+test('wyświetla dane użytkownika poprawnie', async ({ mount }) => {
+  const user = {
+    name: 'Jan Kowalski',
+    email: 'jan@example.com',
+    role: 'Developer'
+  };
+  
+  const component = await mount(<UserProfile user={user} />);
+  
+  await expect(component.getByText('Jan Kowalski')).toBeVisible();
+  await expect(component.getByText('jan@example.com')).toBeVisible();
+  await expect(component.getByText('Developer')).toBeVisible();
+});
+
+// Testowanie warunkowego renderowania
+test('wyświetla komunikat, gdy brak danych użytkownika', async ({ mount }) => {
+  const component = await mount(<UserProfile />);
+  
+  await expect(component.getByText(/brak danych użytkownika/i)).toBeVisible();
+});
+```
+
