@@ -378,3 +378,127 @@ test('wyświetla listę użytkowników po załadowaniu', async ({ mount }) => {
 });
 ```
 
+## Mockowanie i izolacja testów
+
+### React Testing Library
+
+```javascript
+// Mockowanie kontekstu React
+import { render, screen, fireEvent } from '@testing-library/react';
+import { ThemeContext } from './ThemeContext';
+import ThemeSwitcher from './ThemeSwitcher';
+
+test('przełącza motyw', () => {
+  const mockSetTheme = jest.fn();
+  
+  render(
+    <ThemeContext.Provider value={{ theme: 'light', setTheme: mockSetTheme }}>
+      <ThemeSwitcher />
+    </ThemeContext.Provider>
+  );
+  
+  // Kliknij przycisk przełącznika
+  fireEvent.click(screen.getByRole('button', { name: /zmień motyw/i }));
+
+  // Kliknij przycisk przełącznika
+  fireEvent.click(screen.getByRole('button', { name: /zmień motyw/i }));
+  
+  // Sprawdź czy funkcja została wywołana z odpowiednim argumentem
+  expect(mockSetTheme).toHaveBeenCalledWith('dark');
+});
+
+// Mockowanie modułów
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import WeatherWidget from './WeatherWidget';
+import { getWeather } from './weatherService';
+
+// Mockowanie modułu serwisu pogodowego
+jest.mock('./weatherService');
+
+test('wyświetla informacje o pogodzie po wyszukaniu miasta', async () => {
+  // Ustawienie mocka
+  getWeather.mockResolvedValueOnce({
+    temperature: 21,
+    conditions: 'Słonecznie',
+    humidity: 45
+  });
+  
+  render(<WeatherWidget />);
+  
+  // Wprowadzenie nazwy miasta
+  await userEvent.type(screen.getByLabelText(/miasto/i), 'Warszawa');
+  
+  // Kliknięcie przycisku wyszukiwania
+  await userEvent.click(screen.getByRole('button', { name: /sprawdź/i }));
+  
+  // Oczekiwanie na wyniki
+  expect(await screen.findByText(/temperatura: 21°C/i)).toBeInTheDocument();
+  expect(screen.getByText(/warunki: słonecznie/i)).toBeInTheDocument();
+  expect(screen.getByText(/wilgotność: 45%/i)).toBeInTheDocument();
+  
+  // Sprawdzenie czy serwis został wywołany z odpowiednim argumentem
+  expect(getWeather).toHaveBeenCalledWith('Warszawa');
+});
+```
+
+### Playwright
+
+```javascript
+// Mockowanie kontekstu React
+import { test, expect } from '@playwright/experimental-ct-react';
+import { ThemeContext } from './ThemeContext';
+import ThemeSwitcher from './ThemeSwitcher';
+
+test('przełącza motyw', async ({ mount }) => {
+  const mockContextValue = {
+    theme: 'light',
+    setTheme: test.fn()
+  };
+  
+  const component = await mount(
+    <ThemeContext.Provider value={mockContextValue}>
+      <ThemeSwitcher />
+    </ThemeContext.Provider>
+  );
+  
+  // Kliknij przycisk przełącznika
+  await component.getByRole('button', { name: /zmień motyw/i }).click();
+  
+  // Sprawdź czy funkcja została wywołana z odpowiednim argumentem
+  expect(mockContextValue.setTheme).toHaveBeenCalledWith('dark');
+});
+
+// Mockowanie żądań HTTP
+import { test, expect } from '@playwright/experimental-ct-react';
+import WeatherWidget from './WeatherWidget';
+
+test('wyświetla informacje o pogodzie po wyszukaniu miasta', async ({ mount, page }) => {
+  // Przygotowanie mocka dla API
+  await page.route('**/api/weather?city=**', route => {
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        temperature: 21,
+        conditions: 'Słonecznie',
+        humidity: 45
+      })
+    });
+  });
+  
+  const component = await mount(<WeatherWidget />);
+  
+  // Wprowadzenie nazwy miasta
+  await component.getByLabel(/miasto/i).fill('Warszawa');
+  
+  // Kliknięcie przycisku wyszukiwania
+  await component.getByRole('button', { name: /sprawdź/i }).click();
+  
+  // Oczekiwanie na wyniki
+  await expect(component.getByText(/temperatura: 21°C/i)).toBeVisible();
+  await expect(component.getByText(/warunki: słonecznie/i)).toBeVisible();
+  await expect(component.getByText(/wilgotność: 45%/i)).toBeVisible();
+});
+```
+
