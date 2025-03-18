@@ -242,3 +242,139 @@ test('wyświetla komunikat, gdy brak danych użytkownika', async ({ mount }) => 
 });
 ```
 
+## Testowanie interakcji użytkownika
+
+### React Testing Library z user-event
+
+```javascript
+// Testowanie formularza logowania
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import LoginForm from './LoginForm';
+
+test('wywołuje onSubmit z danymi logowania po naciśnięciu przycisku', async () => {
+  const mockSubmit = jest.fn();
+  render(<LoginForm onSubmit={mockSubmit} />);
+  
+  // Znajdź pola formularza
+  const emailInput = screen.getByLabelText(/email/i);
+  const passwordInput = screen.getByLabelText(/hasło/i);
+  const submitButton = screen.getByRole('button', { name: /zaloguj/i });
+  
+  // Wpisz dane
+  await userEvent.type(emailInput, 'test@example.com');
+  await userEvent.type(passwordInput, 'password123');
+  
+  // Kliknij przycisk
+  await userEvent.click(submitButton);
+  
+  // Sprawdź czy funkcja została wywołana z odpowiednimi argumentami
+  expect(mockSubmit).toHaveBeenCalledWith({
+    email: 'test@example.com',
+    password: 'password123'
+  });
+});
+```
+
+### Playwright
+
+```javascript
+// Testowanie formularza logowania
+import { test, expect } from '@playwright/experimental-ct-react';
+import LoginForm from './LoginForm';
+
+test('wywołuje onSubmit z danymi logowania po naciśnięciu przycisku', async ({ mount }) => {
+  const onSubmitMock = { submit: ({ email, password }) => {} };
+  const submitSpy = test.spyOn(onSubmitMock, 'submit');
+  
+  const component = await mount(
+    <LoginForm onSubmit={onSubmitMock.submit} />
+  );
+  
+  // Wpisz dane
+  await component.getByLabel(/email/i).fill('test@example.com');
+  await component.getByLabel(/hasło/i).fill('password123');
+  
+  // Kliknij przycisk
+  await component.getByRole('button', { name: /zaloguj/i }).click();
+  
+  // Sprawdź czy funkcja została wywołana z odpowiednimi argumentami
+  expect(submitSpy).toHaveBeenCalledWith({
+    email: 'test@example.com',
+    password: 'password123'
+  });
+});
+```
+
+## Testowanie asynchroniczne
+
+### React Testing Library
+
+```javascript
+// Testowanie ładowania danych
+import { render, screen, waitFor } from '@testing-library/react';
+import UserList from './UserList';
+import { fetchUsers } from './api';
+
+// Mockowanie modułu API
+jest.mock('./api');
+
+test('wyświetla listę użytkowników po załadowaniu', async () => {
+  // Przygotowanie mocka
+  fetchUsers.mockResolvedValueOnce([
+    { id: 1, name: 'Jan Kowalski' },
+    { id: 2, name: 'Anna Nowak' }
+  ]);
+  
+  render(<UserList />);
+  
+  // Sprawdzenie czy loader jest wyświetlany
+  expect(screen.getByText(/ładowanie/i)).toBeInTheDocument();
+  
+  // Czekanie na dane
+  await waitFor(() => {
+    expect(screen.getByText('Jan Kowalski')).toBeInTheDocument();
+    expect(screen.getByText('Anna Nowak')).toBeInTheDocument();
+    expect(screen.queryByText(/ładowanie/i)).not.toBeInTheDocument();
+  });
+});
+```
+
+### Playwright
+
+```javascript
+// Testowanie ładowania danych
+import { test, expect } from '@playwright/experimental-ct-react';
+import { MockedApiProvider } from './test-utils';
+import UserList from './UserList';
+
+test('wyświetla listę użytkowników po załadowaniu', async ({ mount }) => {
+  // Dane do mocka
+  const mockUsers = [
+    { id: 1, name: 'Jan Kowalski' },
+    { id: 2, name: 'Anna Nowak' }
+  ];
+  
+  // Renderowanie komponentu z prowiderem mocka
+  const component = await mount(
+    <MockedApiProvider
+      mocks={{
+        fetchUsers: async () => mockUsers
+      }}
+    >
+      <UserList />
+    </MockedApiProvider>
+  );
+  
+  // Sprawdzenie czy loader jest wyświetlany
+  await expect(component.getByText(/ładowanie/i)).toBeVisible();
+  
+  // Czekanie na dane
+  await expect(component.getByText('Jan Kowalski')).toBeVisible();
+  await expect(component.getByText('Anna Nowak')).toBeVisible();
+  
+  // Sprawdzenie czy loader zniknął
+  await expect(component.getByText(/ładowanie/i)).not.toBeVisible();
+});
+```
+
