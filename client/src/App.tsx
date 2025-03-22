@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/shared/components/ui/toaster";
@@ -12,6 +12,21 @@ import Skills from "@/features/skills/Skills";
 import ArticlePage from "@/features/articles/ArticlePage";
 import References from "@/features/references/References";
 import HowIDoItPage from "./features/how-i-do-it/HowIDoItPage";
+import { initializeGA, trackPageView } from "./analytics";
+
+import { useEffect } from "react";
+
+
+const PageTracker: React.FC = () => {
+  // useLocation z wouter zwraca [location, navigate]
+  const [location] = useLocation();
+
+  useEffect(() => {
+    trackPageView(location);
+  }, [location]);
+
+  return null;
+};
 
 function Router() {
   return (
@@ -29,9 +44,14 @@ function Router() {
 }
 
 function App() {
+  useEffect(() => {
+    // Zainicjuj Google Analytics
+    initializeGA('portfolio');
+  }, []);
   return (
     <QueryClientProvider client={queryClient}>
       <LanguageProvider>
+        <PageTracker />
         <Sidebar />
         <Router />
         <Toaster />
