@@ -79,4 +79,17 @@ export const articles: Article[] = [
     },
     link: "/articles/reverse-proxy-nginx",
   },
+  {
+    title: {
+      pl: "Testing Library vs Playwright",
+      en: "Testing Library vs Playwright",
+    },
+    date: "2025-03-22",
+    description: {
+      pl: "Testowanie komponentów React z Testing Library vs Playwright - co wybrać i kiedy? [in progress]",
+      en: "Testing React Components with Testing Library vs Playwright – Which One to Choose and When? [in progress]",
+    },
+    link:"",
+    // link: "/articles/reverse-proxy-nginx",
+  },
 ];
