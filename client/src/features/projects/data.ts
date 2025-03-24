@@ -42,14 +42,13 @@ export const projects: Project[] = [
     demo: "https://portfolio.sdet.pl",
   },
   {
-    title: { pl: "Testy Playwright - aplikacji MAF", en: "Playwright Testing - MAF App" },
+    title: { pl: "Testy API Playwright - aplikacji MAF", en: "Playwright Testing - MAF App" },
     description: {
       pl: "Jak nie dać się zwariować i stworzyć skalowalną strukturę do stabilnych testów.",
       en: "How to avoid going crazy and create a scalable structure for stable testing.",
     },
-    link: "",
-    demo: "",
-    // link: "https://github.com/playwright-maf",
+    demo:"",
+    link: "https://github.com/dar-kow/M-A-F/tree/main/maf-api-tests",
     // demo: "https://portfolio.bieda.it",
   },
   {
