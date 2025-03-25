@@ -92,4 +92,16 @@ export const articles: Article[] = [
     link:"",
     // link: "/articles/reverse-proxy-nginx",
   },
+  {
+    title: {
+      pl: "API Tests Playwright - MAF",
+      en: "API Tests Playwright - MAF",
+    },
+    date: "2025-03-24",
+    description: {
+      pl: "Testy backendu w aplikacji MAF - podejście oparte o Playwright",
+      en: "Backend testing in the MAF application – a Playwright-based approach",
+    },
+    link: "/articles/api-tests-playwright-maf",
+  },
 ];
