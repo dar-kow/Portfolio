@@ -47,9 +47,8 @@ export const projects: Project[] = [
       pl: "Jak nie dać się zwariować i stworzyć skalowalną strukturę do stabilnych testów.",
       en: "How to avoid going crazy and create a scalable structure for stable testing.",
     },
-    demo:"",
     link: "https://github.com/dar-kow/M-A-F/tree/main/maf-api-tests",
-    // demo: "https://portfolio.bieda.it",
+    demo: "/articles/api-tests-playwright-maf",
   },
   {
     title: { pl: "SDET - Strefa dla testerów, których korci na więcej", en: "SDET - The Zone for Testers Who Want More" },
