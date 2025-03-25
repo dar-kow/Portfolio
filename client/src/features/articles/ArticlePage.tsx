@@ -36,6 +36,10 @@ const ArticlePage = () => {
                 import(`../../pages/reverse-proxy-nginx${fileSuffix}.md?raw`)
                     .then((mod) => mod.default)
                     .catch(() => import(`../../pages/reverse-proxy-nginx.md?raw`).then((mod) => mod.default)),
+            "api-tests-playwright-maf": () =>
+                import(`../../pages/api-tests-playwright-maf${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/api-tests-playwright-maf.md?raw`).then((mod) => mod.default)),
         };
     }, [fileSuffix]);
 
