@@ -104,4 +104,16 @@ export const articles: Article[] = [
     },
     link: "/articles/api-tests-playwright-maf",
   },
+  {
+    title: {
+      pl: "OVH od zera do eksperta: ",
+      en: "OVH Server Zero to Hero: ",
+    },
+    date: "2025-03-27",
+    description: {
+      pl: "Kompleksowa instrukcja konfiguracji serwera",
+      en: "A Comprehensive Configuration Manual",
+    },
+    link: "/articles/ovh-server-zero-to-hero",
+  },
 ];
