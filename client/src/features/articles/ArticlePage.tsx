@@ -40,6 +40,10 @@ const ArticlePage = () => {
                 import(`../../pages/api-tests-playwright-maf${fileSuffix}.md?raw`)
                     .then((mod) => mod.default)
                     .catch(() => import(`../../pages/api-tests-playwright-maf.md?raw`).then((mod) => mod.default)),
+            "ovh-server-zero-to-hero": () =>
+                import(`../../pages/ovh-server-zero-to-hero${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/ovh-server-zero-to-hero.md?raw`).then((mod) => mod.default)),
         };
     }, [fileSuffix]);
 
