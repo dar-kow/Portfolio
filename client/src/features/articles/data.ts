@@ -86,11 +86,10 @@ export const articles: Article[] = [
     },
     date: "2025-03-22",
     description: {
-      pl: "Testowanie komponentów React z Testing Library vs Playwright - co wybrać i kiedy? [in progress]",
-      en: "Testing React Components with Testing Library vs Playwright – Which One to Choose and When? [in progress]",
+      pl: "Testowanie komponentów React z Testing Library vs Playwright - co wybrać i kiedy?",
+      en: "Testing React Components with Testing Library vs Playwright – Which One to Choose and When?",
     },
-    link:"",
-    // link: "/articles/reverse-proxy-nginx",
+   link: "/articles/react-testing-library-vs-playwright",
   },
   {
     title: {
