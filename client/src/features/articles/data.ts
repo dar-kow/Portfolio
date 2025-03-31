@@ -84,7 +84,7 @@ export const articles: Article[] = [
       pl: "Testing Library vs Playwright",
       en: "Testing Library vs Playwright",
     },
-    date: "2025-03-22",
+    date: "2025-03-31",
     description: {
       pl: "Testowanie komponentów React z Testing Library vs Playwright - co wybrać i kiedy?",
       en: "Testing React Components with Testing Library vs Playwright – Which One to Choose and When?",
