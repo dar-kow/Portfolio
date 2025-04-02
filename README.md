@@ -281,6 +281,8 @@ Remember to:
 - [React Performance Optimization](https://react.dev/learn/managing-state)
 
 
+---
+<br><br><br>
 
 
 # Portfolio z efektami w stylu Matrix zbudowane przy użyciu React
