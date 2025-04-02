@@ -281,6 +281,8 @@ Remember to:
 - [React Performance Optimization](https://react.dev/learn/managing-state)
 
 
+
+
 # Portfolio z efektami w stylu Matrix zbudowane przy użyciu React
 
 W tym artykule pokażę, jak stworzyć portfolio z efektami inspirowanymi filmem Matrix, wykorzystując React i nowoczesne biblioteki front-endowe. Projekt zawiera animowane menu, efekt "padającego kodu" oraz wiele innych interaktywnych elementów.
