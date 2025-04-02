@@ -47,6 +47,22 @@ export const skills: Skill[] = [
   { name: { pl: "Paca zespołowa i komunikacja", en: "Teamwork and Communication" }, level: 80 },
   { name: { pl: "Publikowanie artykułów", en: "Publication of Articles" }, level: 60 },
   {
+    name: { pl: "AI jako wsparcie w testach", en: "AI-Augmented Test Automation & Prompt Engineering" },
+    level: 70,
+    description: {
+      pl: "Wykorzystuję AI do optymalizacji testów automatycznych i analizy kodu, usprawniając procesy QA. Korzystam z narzędzi AI do generowania scenariuszy testowych, analizy logów i wykrywania anomalii, jednocześnie dbając o ich walidację i poprawność.",
+      en: "I utilize AI to optimize automated testing and code analysis, improving QA processes. I leverage AI tools for test scenario generation, log analysis, and anomaly detection while ensuring their validation and accuracy.",
+    },
+  },
+  {
+    name: { pl: "AI / Chatboty / Automatyzacja", en: "AI / Chatbots / Automation" },
+    level: 50,
+    description: {
+      pl: "Tworzę inteligentne systemy automatyzacji wykorzystujące bazy wektorowe Qadrant, platformę przepływów n8n oraz modele językowe (LLM) do budowy efektywnych chatbotów i agentów AI, optymalizujących procesy biznesowe.",
+      en: "I create intelligent automation systems using Qadrant vector databases, n8n workflows, and language models (LLM) to build effective chatbots and AI agents that optimize business processes.",
+    },
+  },
+  {
     name: { pl: "Java - podstawy", en: "Java - basics" },
     level: 45,
     description: {
@@ -69,22 +85,6 @@ export const skills: Skill[] = [
       pl: "Podstawowa znajomość .NET Framework pozwalająca na współpracę z zespołami programistycznymi i lepsze zrozumienie testowanych aplikacji.",
       en: "Basic knowledge of .NET Framework enabling collaboration with development teams and better understanding of tested applications."
     }
-  },
-  {
-    name: { pl: "AI jako wsparcie w testach", en: "AI-Augmented Test Automation & Prompt Engineering" },
-    level: 70,
-    description: {
-      pl: "Wykorzystuję AI do optymalizacji testów automatycznych i analizy kodu, usprawniając procesy QA. Korzystam z narzędzi AI do generowania scenariuszy testowych, analizy logów i wykrywania anomalii, jednocześnie dbając o ich walidację i poprawność.",
-      en: "I utilize AI to optimize automated testing and code analysis, improving QA processes. I leverage AI tools for test scenario generation, log analysis, and anomaly detection while ensuring their validation and accuracy.",
-    },
-  },
-  {
-    name: { pl: "AI / Chatboty / Automatyzacja", en: "AI / Chatbots / Automation" },
-    level: 50,
-    description: {
-      pl: "Tworzę inteligentne systemy automatyzacji wykorzystujące bazy wektorowe Qadrant, platformę przepływów n8n oraz modele językowe (LLM) do budowy efektywnych chatbotów i agentów AI, optymalizujących procesy biznesowe.",
-      en: "I create intelligent automation systems using Qadrant vector databases, n8n workflows, and language models (LLM) to build effective chatbots and AI agents that optimize business processes.",
-    },
   },
 ];
 
