@@ -5,6 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "wouter";
 import SidebarNavLink from "../components/SidebarNavLink";
 import { menuItems, contactMessages, socialLinks, LocalizedLabel } from "../data";
+import { articles } from "@/features/articles/data"; // Import articles data
 
 type Lang = keyof LocalizedLabel;
 
@@ -17,8 +18,20 @@ interface DesktopSidebarProps {
 
 function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: DesktopSidebarProps): JSX.Element {
     const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+    const [hasNewArticles, setHasNewArticles] = useState(false);
 
     useEffect(() => {
+        // Check if any articles are less than 7 days old
+        const currentDate = new Date();
+        const hasNew = articles.some(article => {
+            const articleDate = new Date(article.date);
+            const diffTime = Math.abs(currentDate.getTime() - articleDate.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays <= 7;
+        });
+
+        setHasNewArticles(hasNew);
+
         menuItems.forEach(item => {
             if (item.subMenu && location.startsWith(item.path)) {
                 setExpandedMenu(item.path);
@@ -59,13 +72,22 @@ function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: Deskto
                                     </div>
                                 </div>
                             ) : (
-                                <SidebarNavLink
-                                    href={item.path}
-                                    onClick={() => { }}
-                                    icon={item.icon}
-                                    label={item.label[lang]}
-                                    className={`sidebar-nav-link ${location === item.path ? "sidebar-nav-link-active" : "sidebar-nav-link-inactive"}`}
-                                />
+                                <div className="relative">
+                                    <SidebarNavLink
+                                        href={item.path}
+                                        onClick={() => { }}
+                                        icon={item.icon}
+                                        label={item.label[lang]}
+                                        className={`sidebar-nav-link ${location === item.path ? "sidebar-nav-link-active" : "sidebar-nav-link-inactive"}`}
+                                    />
+
+                                    {/* Display notification bubble for articles menu if there are new articles */}
+                                    {item.path === "/articles" && hasNewArticles && (
+                                        <span className="absolute right-0 top-0 transform translate-x-1 -translate-y-1 flex h-5 px-1.5 items-center justify-center text-xs font-bold rounded bg-[#22b455] text-[var(--matrix-bg)]">
+                                            {lang === "en" ? "NEW" : "NOWY"}
+                                        </span>
+                                    )}
+                                </div>
                             )}
 
                             {/* Podmenu */}
@@ -94,7 +116,6 @@ function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: Deskto
                     ))}
                 </nav>
 
-                {/* Pozostałe elementy bez zmian */}
                 <div className="mb-4 flex justify-center">
                     <button
                         onClick={toggleLang}
