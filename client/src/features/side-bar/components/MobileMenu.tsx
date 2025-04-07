@@ -1,11 +1,11 @@
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { SiGithub, SiLinkedin } from "react-icons/si";
-import { Menu, X, ChevronDown, ChevronUp } from "lucide-react";
-import { Mail } from "lucide-react";
+import { Menu, X, ChevronDown, ChevronUp, Mail } from "lucide-react";
 import { menuItems, contactMessages, socialLinks } from "../data";
 import { useLanguage } from "../../../shared/components/common/LanguageContext";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { articles } from "@/features/articles/data";
 
 interface MobileMenuProps {
     isOpen: boolean;
@@ -24,6 +24,20 @@ function MobileMenu({
 }: MobileMenuProps): JSX.Element {
     const { lang, toggleLang } = useLanguage();
     const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
+    const [hasNewArticles, setHasNewArticles] = useState(false);
+
+    useEffect(() => {
+        // Check if any articles are less than 7 days old
+        const currentDate = new Date();
+        const hasNew = articles.some(article => {
+            const articleDate = new Date(article.date);
+            const diffTime = Math.abs(currentDate.getTime() - articleDate.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            return diffDays <= 7;
+        });
+
+        setHasNewArticles(hasNew);
+    }, []);
 
     const toggleSubMenu = (path: string, e: React.MouseEvent) => {
         e.preventDefault();
@@ -101,6 +115,13 @@ function MobileMenu({
                                                     <div className="flex items-center">
                                                         {item.icon}
                                                         <span className="ml-2">{item.label[lang]}</span>
+
+                                                        {/* New articles notification */}
+                                                        {item.path === "/articles" && hasNewArticles && (
+                                                            <span className="ml-2 flex h-5 px-1.5 items-center justify-center text-xs font-bold rounded bg-[#22b455] text-[var(--matrix-bg)]">
+                                                                {lang === "en" ? "NEW" : "NOWY"}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     {expandedMenu === item.path ?
                                                         <ChevronUp className="w-4 h-4" /> :
@@ -115,8 +136,17 @@ function MobileMenu({
                                                     className={`sidebar-nav-link ${window.location.pathname === item.path ? "sidebar-nav-link-active" : "sidebar-nav-link-inactive"}`}
                                                     onClick={() => setIsOpen(false)}
                                                 >
-                                                    {item.icon}
-                                                    <span>{item.label[lang]}</span>
+                                                    <div className="flex items-center">
+                                                        {item.icon}
+                                                        <span className="ml-2">{item.label[lang]}</span>
+
+                                                        {/* New articles notification */}
+                                                        {item.path === "/articles" && hasNewArticles && (
+                                                            <span className="ml-2 flex h-5 px-1.5 items-center justify-center text-xs font-bold rounded bg-[#22b455] text-[var(--matrix-bg)]">
+                                                                {lang === "en" ? "NEW" : "NOWY"}
+                                                            </span>
+                                                        )}
+                                                    </div>
                                                 </a>
                                             </Link>
                                         )}
@@ -145,17 +175,6 @@ function MobileMenu({
                                         </AnimatePresence>
                                     </div>
                                 ))}
-                                {/* nadmiarowe ale implementację zostawiam */}
-                                {/* <button
-                                    onClick={() => {
-                                        setIsOpen(false);
-                                        setIsContactOpen(true);
-                                    }}
-                                    className="sidebar-nav-link-contact"
-                                >
-                                    <Mail className="w-5 h-5" />
-                                    <span>{contactMessages.contactButton[lang]}</span>
-                                </button> */}
                             </nav>
                         </motion.div>
                     </motion.div>
