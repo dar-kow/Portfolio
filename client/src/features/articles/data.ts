@@ -115,4 +115,16 @@ export const articles: Article[] = [
     },
     link: "/articles/ovh-server-zero-to-hero",
   },
+  {
+    title: {
+      pl: "Wzorzec Fasady i Delagacji",
+      en: "Facade and Delegation Pattern",
+    },
+    date: "2025-04-07",
+    description: {
+      pl: "Refaktoryzacja dużych plików testowych. Sposób na uporządkowanie chaosu",
+      en: "Refactoring large test files. A way to organize chaos",
+    },
+    link: "/articles/facade-pattern-and-delegation",
+  },
 ];
