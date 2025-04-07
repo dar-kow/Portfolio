@@ -48,6 +48,10 @@ const ArticlePage = () => {
                 import(`../../pages/react-testing-library-vs-playwright${fileSuffix}.md?raw`)
                     .then((mod) => mod.default)
                     .catch(() => import(`../../pages/react-testing-library-vs-playwright.md?raw`).then((mod) => mod.default)),
+            "facade-pattern-and-delegation": () =>
+                import(`../../pages/facade-pattern-and-delegation${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/facade-pattern-and-delegation.md?raw`).then((mod) => mod.default)),
         };
     }, [fileSuffix]);
 
