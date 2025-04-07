@@ -54,7 +54,7 @@ export class SaleActions {
 }
 ```
 
-Powyższy kod pokazuje główną klasę `SaleActions`, która działa teraz jako fasada. Zamiast implementować wszystkie metody, deleguje wywołania do wyspecjalizowanych klas:
+Powyższy kod pokazuje główną klasę ***SaleActions***, która działa teraz jako fasada. Zamiast implementować wszystkie metody, deleguje wywołania do wyspecjalizowanych klas:
 
 1. **BasketTableManager** - zarządzanie tabelą koszyka
 2. **ProcessActions** - procesy sprzedaży i płatności
