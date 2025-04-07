@@ -1,4 +1,4 @@
-# Refaktoryzacja dużych plików testowych: Wzorzec Fasady i Delegacje jako sposób na uporządkowanie chaosu
+# Refaktoryzacja dużych plików testowych: <br>Wzorzec Fasady i Delegacje jako sposób na uporządkowanie chaosu
 
 Gdy projekty rozrastają się, klasy testowe często przekształcają się w monolityczne kolosy pełne powtarzającego się kodu. W tym artykule omówimy strategię refaktoryzacji dużych plików z akcjami testowymi, wykorzystując wzorzec fasady i delegacje, aby utrzymać porządek i skalowalność.
 
