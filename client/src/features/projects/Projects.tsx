@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Card,
@@ -5,16 +6,58 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
+  CardFooter,
 } from "@/shared/components/ui/card";
 import { SiGithub } from "react-icons/si";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Clock } from "lucide-react";
 import { useLanguage } from "../../shared/components/common/LanguageContext";
-import { projectsMessages, projects } from "./data";
+import { projectsMessages, projects as initialProjects, Project } from "./data";
 import MatrixEffect from "@/shared/components/common/MatrixRain";
 import { getMatrixColors } from "../articles/Articles";
+import { extractRepoInfo, fetchLastCommitDateWithCache, formatCommitDate } from "@/shared/services/github-api";
 
 const Projects = () => {
   const { lang } = useLanguage();
+  const [projects, setProjects] = useState<(Project)[]>(initialProjects);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch last commit dates when component mounts
+  useEffect(() => {
+    const fetchCommitDates = async () => {
+      setIsLoading(true);
+
+      const updatedProjects = await Promise.all(
+        initialProjects.map(async (project) => {
+          // Only try to fetch for GitHub repos with valid links
+          if (!project.link || project.link.trim() === '') {
+            return project;
+          }
+
+          const repoInfo = extractRepoInfo(project.link);
+          if (!repoInfo) {
+            return project;
+          }
+
+          try {
+            const lastCommitDate = await fetchLastCommitDateWithCache(repoInfo.owner, repoInfo.repo);
+            return {
+              ...project,
+              lastCommitDate: lastCommitDate === null ? undefined : lastCommitDate
+            };
+          } catch (error) {
+            console.error(`Error fetching commit date for ${project.title.en}:`, error);
+            return project;
+          }
+        })
+      );
+
+      setProjects(updatedProjects);
+      setIsLoading(false);
+    };
+
+    fetchCommitDates();
+  }, []);
+
   return (
     <>
       <MatrixEffect immediate bgOpacity={0.2} matrixColors={getMatrixColors()} />
@@ -31,7 +74,7 @@ const Projects = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="cursor-pointer bg-[var(--matrix-bg)] border border-[var(--matrix-dark)] hover:shadow-[0_0_8px_#80ce87] transition-all duration-200">
+                <Card className="cursor-pointer bg-[var(--matrix-bg)] border border-[var(--matrix-dark)] hover:shadow-[0_0_8px_#80ce87] transition-all duration-200 flex flex-col h-full">
                   <CardHeader>
                     <CardTitle className="text-[var(--matrix-white)] text-xl font-bold">
                       {project.title[lang]}
@@ -40,8 +83,8 @@ const Projects = () => {
                       {project.description[lang]}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-row space-x-2">
+                  <CardContent className="flex-grow">
+                    <div className="flex flex-row space-x-2 flex-wrap gap-y-2">
                       {project.link && project.link.trim() !== "" && (
                         <a
                           href={project.link}
@@ -70,6 +113,23 @@ const Projects = () => {
                       )}
                     </div>
                   </CardContent>
+                  {project.lastCommitDate ? (
+                    <CardFooter className="border-t border-[var(--matrix-darker)] pt-3 mt-auto">
+                      <div className="flex items-center text-xs text-[var(--matrix-mid-light)]">
+                        <Clock className="w-3 h-3 mr-1" />
+                        <span>
+                          {projectsMessages.lastUpdated[lang]}: {formatCommitDate(project.lastCommitDate, lang)}
+                        </span>
+                      </div>
+                    </CardFooter>
+                  ) : project.link && isLoading ? (
+                    <CardFooter className="border-t border-[var(--matrix-darker)] pt-3 mt-auto">
+                      <div className="flex items-center text-xs text-[var(--matrix-mid-light)] animate-pulse">
+                        <Clock className="w-3 h-3 mr-1" />
+                        <span>{projectsMessages.lastUpdated[lang]}...</span>
+                      </div>
+                    </CardFooter>
+                  ) : null}
                 </Card>
               </motion.div>
             ))}
