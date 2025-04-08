@@ -52,6 +52,10 @@ const ArticlePage = () => {
                 import(`../../pages/facade-pattern-and-delegation${fileSuffix}.md?raw`)
                     .then((mod) => mod.default)
                     .catch(() => import(`../../pages/facade-pattern-and-delegation.md?raw`).then((mod) => mod.default)),
+            "automatic-update-dates-is-project-portfolio": () =>
+                import(`../../pages/automatic-update-dates-is-project-portfolio${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/automatic-update-dates-is-project-portfolio.md?raw`).then((mod) => mod.default)),
         };
     }, [fileSuffix]);
 
