@@ -558,6 +558,18 @@ Pamiętaj o:
 - Odpowiednim balansie między estetyką a użytecznością
 - Testowaniu na różnych urządzeniach i przeglądarkach
 
+## Zaawansowane funkcje projektu
+
+### Automatyczne daty aktualizacji repozytoriów
+
+Portfolio zawiera funkcję automatycznego pobierania i wyświetlania dat ostatnich commitów dla projektów hostowanych na GitHubie:
+
+- Integracja z GitHub API
+- Cache odpowiedzi dla zoptymalizowania wydajności
+- Responsywne wyświetlanie dat z indykatorem ładowania
+- Formatowanie dat zgodne z wybranym językiem
+- Obsługa 20+ języków w szablonach dat
+
 ## Linki do przydatnych zasobów
 
 - [Framer Motion Examples](https://www.framer.com/motion/examples/)
