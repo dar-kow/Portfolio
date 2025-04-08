@@ -7,6 +7,7 @@ export type ProjectsMessages = {
   title: LocalizedString;
   sourceCode: LocalizedString;
   liveDemo: LocalizedString;
+  lastUpdated: LocalizedString; // Added this field
 };
 
 export type Project = {
@@ -14,12 +15,14 @@ export type Project = {
   description: LocalizedString;
   link: string;
   demo: string;
+  lastCommitDate?: string; // Added this optional field
 };
 
 export const projectsMessages: ProjectsMessages = {
   title: { pl: "Projekty", en: "Projects" },
   sourceCode: { pl: "Kod źródłowy", en: "Source Code" },
   liveDemo: { pl: "Demo", en: "Live Demo" },
+  lastUpdated: { pl: "Ostatnia aktualizacja", en: "Last updated" }, // Added this message
 };
 
 export const projects: Project[] = [
