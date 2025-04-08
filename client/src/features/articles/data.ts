@@ -127,4 +127,16 @@ export const articles: Article[] = [
     },
     link: "/articles/facade-pattern-and-delegation",
   },
+  {
+    title: {
+      pl: "Automatyczne Daty Aktualizacji w Portfolio Projektu",
+      en: "Automatic Update Dates in Project Portfolio",
+    },
+    date: "2025-04-08",
+    description: {
+      pl: "Korzyści dla prestiżu portfolio",
+      en: "Benefits for portfolio prestige",
+    },
+    link: "/articles/automatic-update-dates-is-project-portfolio",
+  },
 ];
