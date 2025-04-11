@@ -45,16 +45,7 @@ export const projects: Project[] = [
     demo: "https://portfolio.sdet.pl",
   },
   {
-    title: { pl: "Testy API Playwright - aplikacji MAF", en: "Playwright Testing - MAF App" },
-    description: {
-      pl: "Jak nie dać się zwariować i stworzyć skalowalną strukturę do stabilnych testów.",
-      en: "How to avoid going crazy and create a scalable structure for stable testing.",
-    },
-    link: "https://github.com/dar-kow/M-A-F/tree/main/maf-api-tests",
-    demo: "/articles/api-tests-playwright-maf",
-  },
-  {
-    title: { pl: "Confluence Headers Manager -  zarządzanie i śledzenie nagłówków.", en: "Confluence Headers Manager - managing and tracking headers." },
+    title: { pl: "Confluence Headers Manager -  zarządzanie nagłówkami.", en: "Confluence Headers Manager - header management." },
     description: {
       pl: "To inteligentne narzędzie rozwiązujące jeden z najbardziej uciążliwych problemów użytkowników Confluence",
       en: "An intelligent tool that solves one of the most frustrating problems for Confluence users",
@@ -62,6 +53,15 @@ export const projects: Project[] = [
     link: "https://github.com/dar-kow/confluence-headers-manager-pro",
     demo:"",
     // demo: "https://github.com/dar-kow/confluence-headers-manager-pro",
+  },
+  {
+    title: { pl: "Testy API Playwright - aplikacji MAF", en: "Playwright Testing - MAF App" },
+    description: {
+      pl: "Jak nie dać się zwariować i stworzyć skalowalną strukturę do stabilnych testów.",
+      en: "How to avoid going crazy and create a scalable structure for stable testing.",
+    },
+    link: "https://github.com/dar-kow/M-A-F/tree/main/maf-api-tests",
+    demo: "/articles/api-tests-playwright-maf",
   },
   {
     title: { pl: "SDET - Strefa dla testerów, których korci na więcej", en: "SDET - The Zone for Testers Who Want More" },
