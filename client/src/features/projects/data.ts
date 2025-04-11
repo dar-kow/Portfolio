@@ -54,6 +54,16 @@ export const projects: Project[] = [
     demo: "/articles/api-tests-playwright-maf",
   },
   {
+    title: { pl: "Confluence Headers Manager -  zarządzanie i śledzenie nagłówków.", en: "Confluence Headers Manager - managing and tracking headers." },
+    description: {
+      pl: "To inteligentne narzędzie rozwiązujące jeden z najbardziej uciążliwych problemów użytkowników Confluence",
+      en: "An intelligent tool that solves one of the most frustrating problems for Confluence users",
+    },
+    link: "https://github.com/dar-kow/confluence-headers-manager-pro",
+    demo:"",
+    // demo: "https://github.com/dar-kow/confluence-headers-manager-pro",
+  },
+  {
     title: { pl: "SDET - Strefa dla testerów, których korci na więcej", en: "SDET - The Zone for Testers Who Want More" },
     description: {
       pl: "Projekt w fazie budowy. Już wkrótce pokaże, jak zbudować prostą, ale skuteczną stronę startową inicjującą projekt. Założeniem jest nie tylko stworzenie atrakcyjnego interfejsu, ale także zbieranie subskrybentów i zaproszenie chętnych do współtworzenia. W tle działa solidny backend z panelem administratora – zarządzanie danymi, autoryzacja oparta o JWT i baza PostgreSQL gwarantują nowoczesne podejście. Start odliczania to pierwszy, ale najważniejszy krok, który motywuje do działania. Stay tuned!",
