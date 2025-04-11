@@ -83,8 +83,9 @@ const Projects = () => {
                       {project.description[lang]}
                     </CardDescription>
                   </CardHeader>
-                  <CardContent className="flex-grow">
-                    <div className="flex flex-row space-x-2 flex-wrap gap-y-2">
+                  <CardContent className="flex-grow flex flex-col">
+                    {/* Using flex-col and mt-auto to push links to bottom */}
+                    <div className="flex flex-row space-x-2 flex-wrap gap-y-2 mt-auto">
                       {project.link && project.link.trim() !== "" && (
                         <a
                           href={project.link}
