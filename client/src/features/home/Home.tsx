@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import TextReveal from "../../shared/components/common/TextReveal";
 import MatrixEffect from "../../shared/components/common/MatrixRain";
-import { Button } from "../../shared/components/ui/button";
-import { Download } from "lucide-react";
 import { homeMessages } from "./data";
 import { useLanguage } from "../../shared/components/common/LanguageContext";
 import MatrixLoader from "../../shared/components/common/MatrixLoader";
