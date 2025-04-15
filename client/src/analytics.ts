@@ -16,9 +16,9 @@ export const initializeGA = (appName: string = 'main-site'): void => {
             app_name: appName
         });
 
-        console.log(`Google Analytics initialized for app: ${appName}`);
+        // console.log(`Google Analytics initialized for app: ${appName}`);
     } else {
-        console.log('Google Analytics not initialized in development mode');
+        // console.log('Google Analytics not initialized in development mode');
     }
 };
 
@@ -26,7 +26,7 @@ export const initializeGA = (appName: string = 'main-site'): void => {
 export const trackPageView = (path: string): void => {
     if (process.env.NODE_ENV === 'production' || process.env.REACT_APP_ENABLE_GA_DEV === 'true') {
         ReactGA.send({ hitType: 'pageview', page: path });
-        console.log(`Page view tracked: ${path}`);
+        // console.log(`Page view tracked: ${path}`);
     }
 };
 
@@ -44,6 +44,6 @@ export const trackEvent = (
             label,
             value
         });
-        console.log(`Event tracked: ${category} - ${action}`);
+        // console.log(`Event tracked: ${category} - ${action}`);
     }
 };
