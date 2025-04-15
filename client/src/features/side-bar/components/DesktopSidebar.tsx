@@ -5,7 +5,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "wouter";
 import SidebarNavLink from "../components/SidebarNavLink";
 import { menuItems, contactMessages, socialLinks, LocalizedLabel } from "../data";
-import { articles } from "@/features/articles/data"; // Import articles data
+import { articles } from "@/features/articles/data";
 
 type Lang = keyof LocalizedLabel;
 
