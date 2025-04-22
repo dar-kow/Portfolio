@@ -1,4 +1,4 @@
-## Architektura testów oparta na podejściu Vertical Slice z wykorzystaniem Playwright.
+## Architektura testów oparta na hybrydowym podejściu Vertical Slice i Page Object Model z wykorzystaniem Playwright
 
 ```mermaid
 flowchart TD
@@ -50,11 +50,15 @@ flowchart TD
     
     TestExecution --> ReportGen[Report Generation]
     ReportGen --> End([End])
-
 ```
 
+Moje podejście do testów automatycznych opiera się na hybrydowej architekturze łączącej koncepcje Vertical Slice i Page Object Model (POM). Warto rozróżnić te dwa pojęcia:
 
-Moje podejście do testów automatycznych opiera się na architekturze vertical slice, która organizuje kod według funkcjonalności zamiast warstw technicznych. Dzięki temu wszystkie komponenty testowe związane z konkretną funkcjonalnością są zgrupowane razem, co zwiększa czytelność i łatwość utrzymania kodu.
+- **Vertical Slice Architecture** to wzorzec architektury aplikacji organizujący kod według funkcjonalności biznesowych (pionowo), a nie warstw technicznych (poziomo). Tradycyjnie jest stosowany w rozwoju aplikacji, nie w testach.
+
+- **Page Object Model (POM)** to klasyczny wzorzec projektowy w testach automatycznych, gdzie każda strona aplikacji jest reprezentowana jako osobna klasa z metodami do interakcji z elementami tej strony.
+
+Moje podejście łączy te koncepcje: organizuję kod testowy wokół funkcjonalności biznesowych (jak w Vertical Slice), ale wewnątrz każdej funkcjonalności stosuję strukturę podobną do POM z wyraźnym podziałem odpowiedzialności.
 
 #### Struktura projektu
 
@@ -89,8 +93,8 @@ Moje podejście do testów automatycznych opiera się na architekturze vertical 
 
 Każdy moduł funkcjonalności zawiera cztery kluczowe typy plików z ścisłym podziałem odpowiedzialności:
 
-1. **Components (**components.ts**)**
-- Zawiera tylko lokatory elementów UI
+1. **Components (components.ts)**
+- Zawiera tylko lokatory elementów UI (podobnie jak w POM)
 - Brak zależności od innych plików
 - Przykład:
 
@@ -104,7 +108,7 @@ Każdy moduł funkcjonalności zawiera cztery kluczowe typy plików z ścisłym 
      }
   ```
 
-2. **Data (**data.ts**)**
+2. **Data (data.ts)**
 - Zawiera dane testowe i wymagane typy
 - Brak zależności od innych plików
 - Przykład:
@@ -129,8 +133,8 @@ Każdy moduł funkcjonalności zawiera cztery kluczowe typy plików z ścisłym 
      };
   ```
 
-3. **Actions (**actions.ts**)**
-- Zawiera interakcje ze stroną bez asercji
+3. **Actions (actions.ts)**
+- Zawiera interakcje ze stroną bez asercji (odpowiednik metod w POM)
 - Zależy od Components i Data
 - Przykład:
 
@@ -153,7 +157,7 @@ Każdy moduł funkcjonalności zawiera cztery kluczowe typy plików z ścisłym 
      }
   ```
 
-4. **Tests (**test.ts**)**
+4. **Tests (test.ts)**
 - Zawiera przypadki testowe z asercjami
 - Zależy od Components, Data i Actions
 - Przykład:
@@ -180,10 +184,20 @@ Każdy moduł funkcjonalności zawiera cztery kluczowe typy plików z ścisłym 
      });
   ```
 
-Choć staram się unikać w testach stosowania page.locator i hardcodowanych w testach danych string/number 
-Locatory do components, a dane do data - ułatwia to modyfikację w jednym miejscu.
+Choć staram się unikać w testach stosowania page.locator i hardcodowanych w testach danych string/number. 
+Locatory należą do components, a dane do data - ułatwia to modyfikację w jednym miejscu.
 
 **To przykład - real code w repo na github'ie.**
+
+#### Różnice względem standardowego POM
+
+W klasycznym Page Object Model:
+- Kod organizowany jest wokół stron/widoków (np. LoginPage, DashboardPage)
+- Każda klasa Page Object zawiera zarówno lokatory jak i metody do interakcji
+
+W moim podejściu:
+- Kod organizowany jest wokół funkcjonalności biznesowych (np. create-user, user-profile)
+- Dla każdej funkcjonalności stosujemy dodatkowy podział na components, actions, data i tests
 
 #### Korzyści tej architektury
 
@@ -207,4 +221,4 @@ Locatory do components, a dane do data - ułatwia to modyfikację w jednym miejs
   - Nowe funkcje można dodawać bez modyfikowania istniejących
   - Wspólne wzorce można standaryzować w całej bazie kodu
 
-### Ta architektura sprawdza się szczególnie dobrze w testowaniu złożonych aplikacji, zwłaszcza gdy mamy do czynienia z funkcjonalnościami posiadającymi wiele stanów i wariantów, jak system zarządzania użytkownikami opisany powyżej.
+### Ta hybrydowa architektura sprawdza się szczególnie dobrze w testowaniu złożonych aplikacji, zwłaszcza gdy mamy do czynienia z funkcjonalnościami posiadającymi wiele stanów i wariantów, jak system zarządzania użytkownikami opisany powyżej.
