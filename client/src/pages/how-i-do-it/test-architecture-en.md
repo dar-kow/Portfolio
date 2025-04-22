@@ -1,4 +1,4 @@
-## Test Architecture Based on the Vertical Slice Approach Using Playwright
+## Test Architecture Based on a Hybrid Approach of Vertical Slice and Page Object Model Using Playwright
 
 ```mermaid
 flowchart TD
@@ -50,10 +50,15 @@ flowchart TD
     
     TestExecution --> ReportGen[Report Generation]
     ReportGen --> End([End])
-
 ```
 
-My approach to automated testing is based on the vertical slice architecture, which organizes code by functionality instead of technical layers. This ensures that all test components related to a specific functionality are grouped together, which increases readability and ease of code maintenance.
+My approach to automated testing is based on a hybrid architecture combining the concepts of Vertical Slice and Page Object Model (POM). It's important to distinguish between these two concepts:
+
+- **Vertical Slice Architecture** is an application architecture pattern that organizes code by business functionality (vertically) rather than by technical layers (horizontally). Traditionally, it's used in application development, not in testing.
+
+- **Page Object Model (POM)** is a classic design pattern in automated testing where each page of the application is represented as a separate class with methods to interact with the elements on that page.
+
+My approach combines these concepts: I organize test code around business functionalities (as in Vertical Slice), but within each functionality, I apply a structure similar to POM with a clear separation of responsibilities.
 
 #### Project Structure
 
@@ -88,11 +93,12 @@ My approach to automated testing is based on the vertical slice architecture, wh
 
 Each functionality module contains four key types of files with a strict separation of responsibilities:
 
-1. **Components (`components.ts`)**
-   - Contains only UI element locators
-   - No dependencies on other files
-   - Example:
-     ```typescript
+1. **Components (components.ts)**
+- Contains only UI element locators (similar to POM)
+- No dependencies on other files
+- Example:
+
+  ```typescript
      export class CreateUserComponents {
        readonly addButton = this.page.locator('text="+ Create User"');
        readonly nameField = this.page.locator('[data-testid="name-field"]');
@@ -100,13 +106,14 @@ Each functionality module contains four key types of files with a strict separat
        
        constructor(private page: Page) {}
      }
-     ```
+  ```
 
-2. **Data (`data.ts`)**
-   - Contains test data and required types
-   - No dependencies on other files
-   - Example:
-     ```typescript
+2. **Data (data.ts)**
+- Contains test data and required types
+- No dependencies on other files
+- Example:
+
+  ```typescript
      export const UserData = {
        Valid: {
          role: 'admin',
@@ -124,13 +131,14 @@ Each functionality module contains four key types of files with a strict separat
          // other sets of invalid data
        }
      };
-     ```
+  ```
 
-3. **Actions (`actions.ts`)**
-   - Contains page interactions without assertions
-   - Depends on Components and Data
-   - Example:
-     ```typescript
+3. **Actions (actions.ts)**
+- Contains page interactions without assertions (equivalent to methods in POM)
+- Depends on Components and Data
+- Example:
+
+  ```typescript
      export class CreateUserActions {
        private components: CreateUserComponents;
        
@@ -147,13 +155,14 @@ Each functionality module contains four key types of files with a strict separat
          await this.components.saveButton.click();
        }
      }
-     ```
+  ```
 
-4. **Tests (`test.ts`)**
-   - Contains test cases with assertions
-   - Depends on Components, Data, and Actions
-   - Example:
-     ```typescript
+4. **Tests (test.ts)**
+- Contains test cases with assertions
+- Depends on Components, Data, and Actions
+- Example:
+   
+ ```typescript
      test.describe("CreateUser", () => {
        test.beforeEach(async ({ page }) => {
          await new AuthActions(page).loginAsAdmin();
@@ -173,33 +182,43 @@ Each functionality module contains four key types of files with a strict separat
          await expect(page.locator('.field-error')).toBeVisible();
        });
      });
-     ```
+  ```
 
-Although I try to avoid using page.locator and hardcoded string/number data in tests,
-Locators go to components, and data goes to data - this makes modification in one place easier.
+I try to avoid using page.locator and hardcoded string/number data in tests.
+Locators belong to components, and data to data files - this makes modification in one place easier.
 
-**This is an example - real code is in the GitHub repository.**
+**This is an example - real code is in a GitHub repository.**
+
+#### Differences from Standard POM
+
+In the classic Page Object Model:
+- Code is organized around pages/views (e.g., LoginPage, DashboardPage)
+- Each Page Object class contains both locators and methods for interaction
+
+In my approach:
+- Code is organized around business functionalities (e.g., create-user, user-profile)
+- For each functionality, we apply an additional division into components, actions, data, and tests
 
 #### Benefits of this Architecture
 
 1. **Clear Separation of Responsibilities**
-   - Each file has a single responsibility
-   - Dependencies flow in one direction
+  - Each file has a single responsibility
+  - Dependencies flow in one direction
 
 2. **Reusability**
-   - Components and actions can be reused across multiple tests
-   - Data patterns can be templated and extended
+  - Components and actions can be reused across multiple tests
+  - Data patterns can be templated and extended
 
-3. **Ease of Maintenance**
-   - Locator changes need to be updated only in component files
-   - Business logic changes only affect action files
+3. **Maintainability**
+  - Locator changes need to be updated only in component files
+  - Business logic changes affect only action files
 
 4. **Readability**
-   - Tests follow the Given-When-Then pattern
-   - Descriptive test names provide documentation
+  - Tests follow the Given-When-Then pattern
+  - Descriptive test names provide documentation
 
 5. **Scalability**
-   - New features can be added without modifying existing ones
-   - Common patterns can be standardized across the codebase
+  - New features can be added without modifying existing ones
+  - Common patterns can be standardized across the codebase
 
-### This architecture works particularly well in testing complex applications, especially when dealing with functionalities that have multiple states and variants, such as the user management system described above.
+### This hybrid architecture works particularly well for testing complex applications, especially when dealing with functionalities that have multiple states and variants, such as the user management system described above.
