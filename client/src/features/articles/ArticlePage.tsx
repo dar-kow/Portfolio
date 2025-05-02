@@ -56,6 +56,10 @@ const ArticlePage = () => {
                 import(`../../pages/automatic-update-dates-is-project-portfolio${fileSuffix}.md?raw`)
                     .then((mod) => mod.default)
                     .catch(() => import(`../../pages/automatic-update-dates-is-project-portfolio.md?raw`).then((mod) => mod.default)),
+            "ui-tests-playwright-maf": () =>
+                import(`../../pages/ui-tests-playwright-maf${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/ui-tests-playwright-maf.md?raw`).then((mod) => mod.default)),
         };
     }, [fileSuffix]);
 
