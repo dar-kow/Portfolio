@@ -27,6 +27,15 @@ export const projectsMessages: ProjectsMessages = {
 
 export const projects: Project[] = [
   {
+    title: { pl: "Testy E2E aplikacji MAF w Playwright", en: "E2E Testing of the MAF App with Playwright" },
+    description: {
+      pl: "Zautomatyzowany zestaw testów end-to-end przygotowany w Playwright do weryfikacji kluczowych funkcji mojej autorskiej aplikacji MAF. Skupia się na testowaniu interfejsu, walidacji danych i stabilności działania w różnych scenariuszach użytkownika.",
+      en: "An automated end-to-end test suite built with Playwright to verify the core features of my custom MAF application. It focuses on UI testing, data validation, and functional stability across various user scenarios.",
+    },
+    link: "https://github.com/dar-kow/maf-e2e-pw",
+    demo:""
+  },
+  {
     title: { pl: "Projekt MAF - Moja Aplikacja Faktur", en: "Project MAF" },
     description: {
       pl: "Proste narzędzie do analizy finansowej z przetwarzaniem danych w czasie rzeczywistym",
