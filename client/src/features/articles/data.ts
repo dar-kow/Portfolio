@@ -105,6 +105,18 @@ export const articles: Article[] = [
   },
   {
     title: {
+      pl: "Testy interfejsu użytkownika - MAF",
+      en: "User Interface Testing - MAF",
+    },
+    date: "2025-04-26",
+    description: {
+      pl: "Playwright / TS / Early Return Pattern / POM / Vertical Slice",
+      en: "Playwright / TS / Early Return Pattern / POM / Vertical Slice",
+    },
+    link: "/articles/ui-tests-playwright-maf",
+  },
+  {
+    title: {
       pl: "OVH od zera do eksperta: ",
       en: "OVH Server Zero to Hero: ",
     },
@@ -139,4 +151,5 @@ export const articles: Article[] = [
     },
     link: "/articles/automatic-update-dates-is-project-portfolio",
   },
+
 ];
