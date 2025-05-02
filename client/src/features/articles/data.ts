@@ -110,8 +110,8 @@ export const articles: Article[] = [
     },
     date: "2025-04-26",
     description: {
-      pl: "Playwright / TS / Early Return Pattern / POM / Vertical Slice",
-      en: "Playwright / TS / Early Return Pattern / POM / Vertical Slice",
+      pl: "Playwright / TS / Return Early Pattern / POM / Vertical Slice",
+      en: "Playwright / TS / Return Early Pattern / POM / Vertical Slice",
     },
     link: "/articles/ui-tests-playwright-maf",
   },
