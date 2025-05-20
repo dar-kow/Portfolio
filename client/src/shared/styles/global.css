@@ -1,8 +1,9 @@
+/* ===== Tailwind Base ===== */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ========= Base Styles ========= */
+/* ===== CSS Variables & Base Colors ===== */
 @layer base {
   :root {
     --matrix-black: #18201c;
@@ -15,13 +16,12 @@
     --matrix-light: #80ce87;
     --matrix-white: #e5e0d6;
   }
+}
 
+/* ===== Reset & Base Elements ===== */
+@layer base {
   * {
     @apply border-border;
-  }
-
-  /* Scrollbar styling */
-  * {
     scrollbar-width: thin;
     scrollbar-color: var(--matrix-primary) var(--matrix-dark);
   }
@@ -39,38 +39,41 @@
   ::-webkit-scrollbar-thumb:hover {
     background: var(--matrix-hover);
   }
-
   body {
     @apply font-sans antialiased bg-background text-foreground;
     margin: 0;
     background-color: var(--matrix-bg);
     overflow-x: hidden;
   }
+  .page-container a {
+    color: #80ce87;
+  }
 }
-.page-container a {
-    color: #80ce87; /* kolor linków - Matrixowy akcent */
-  }
 
-/* ========= Component Styles ========= */
+/* ===== Layout & Containers ===== */
 @layer components {
-  .matrix-loader {
-    /* pełny ekran czarnym tłem */
-    background-color: #000;
-  }
-  .matrix-loader-ring {
-    width: 80px;
-    height: 80px;
-    border: 8px solid rgba(34, 180, 85, 0.2);
-    border-top-color: #22b455;
-    border-radius: 50%;
-  }
-  /* --- Global Layout & Typography --- */
   .portfolio-container {
     @apply relative w-full min-h-screen;
+  }
+  .home-container {
+    @apply relative min-h-screen w-full overflow-hidden flex items-center justify-center md:pl-72;
   }
   .welcome-screen {
     @apply absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center z-10 p-4 w-full max-w-2xl;
   }
+  .welcome-screen-inner {
+    @apply flex flex-col items-center px-4 md:px-8 w-full max-w-full;
+  }
+  .heading-wrapper {
+    @apply main-title text-center space-y-6 md:space-y-8 w-full md:max-w-2xl mx-auto;
+  }
+  .content-wrapper {
+    @apply pl-0 md:pl-64;
+  }
+}
+
+/* ===== Typography & Text Effects ===== */
+@layer components {
   .main-title {
     @apply space-y-6;
   }
@@ -103,84 +106,68 @@
       0 0 30px var(--matrix-light);
     animation: glow 2s ease-in-out infinite alternate;
   }
-  .home-container {
-    @apply relative min-h-screen w-full overflow-hidden flex items-center justify-center md:pl-72;
-  }
-  .welcome-screen-inner {
-    @apply flex flex-col items-center px-4 md:px-8 w-full max-w-full;
-  }
-  .heading-wrapper {
-    @apply main-title text-center space-y-6 md:space-y-8 w-full md:max-w-2xl mx-auto;
-  }
   .heading-text {
     @apply matrix-text text-xl sm:text-2xl md:text-3xl lg:text-4xl font-mono;
   }
+}
+
+/* ===== Buttons & Interactive Elements ===== */
+@layer components {
   .cv-button-container {
     @apply pt-4 md:pt-6;
   }
+  .matrix-button {
+    @apply gap-2 border-[#22b455] text-[#22b455] transform transition-all duration-300;
+  }
+  .matrix-button:hover {
+    @apply hover:bg-[#204829]/20 hover:scale-[1.02];
+    box-shadow: 0 0 8px rgba(128, 206, 135, 0.3);
+  }
+  .matrix-button-text {
+    @apply text-xs font-mono;
+    animation: glow-btn 2s ease-in-out infinite alternate;
+  }
+  .matrix-button-text h1 {
+    font-size: 0.75rem !important;
+    line-height: 1rem !important;
+  }
+}
 
-  /* --- Skills, Articles, Projects --- */
-  .skills-container,
-  .references-container,
-  .articles-container,
-  .projects-container {
-    @apply p-4 md:p-8 md:pl-72 mt-16 md:mt-0;
+/* ===== Matrix Loader & Effects ===== */
+@layer components {
+  .matrix-loader {
+    background-color: #000;
   }
-  .skills-title,
-  .articles-title,
-  .projects-title {
-    @apply text-2xl md:text-3xl font-bold text-primary;
+  .matrix-loader-ring {
+    width: 80px;
+    height: 80px;
+    border: 8px solid rgba(34, 180, 85, 0.2);
+    border-top-color: #22b455;
+    border-radius: 50%;
   }
-  .skills-grid,
-  .articles-grid,
-  .projects-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6;
+  .matrix-transition-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(32, 72, 41, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    pointer-events: none;
+    z-index: 50;
+    animation: matrix-pulse 1s ease-out;
   }
-  .learning-title {
-    @apply text-2xl font-bold;
-    color: #f59e0b;
+  .page-transition-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
-  .learning-description {
-    /* @apply text-sm md:text-base; */
-    border-color: var(--matrix-white);
-    color: var(--matrix-white);
-  }
-  .learning-progress {
-    @apply mt-2 h-2;
-    background-color: rgba(245, 158, 11, 0.2);
-  }
-  .learning-skill-desc {
-    @apply text-xs mt-1;
-    color: rgba(245, 158, 11, 0.8);
-  }
+}
 
-  /* --- Progress Bars --- */
-  .progress-bar {
-    @apply bg-gray-700 h-2 mt-2 rounded;
-  }
-  .progress-fill {
-    @apply h-2 rounded;
-  }
-  .progress-fill-primary {
-    @apply bg-[#22b455];
-  }
-  .progress-fill-learning {
-    @apply bg-[#F59E0B];
-  }
-  /* Override for learning progress fill */
-  .learning-progress > div {
-    @apply bg-[#F59E0B];
-  }
-
-  /* --- Sidebar --- */
-
+/* ===== Sidebar & Navigation ===== */
+@layer components {
   .mobile-menu {
     position: sticky;
     top: 0;
-    z-index: 50; /* upewnij się, że jest wyżej niż reszta treści */
+    z-index: 50;
     background-color: rgba(17, 17, 17, 0.9);
   }
-
   .sidebar-hamburger {
     @apply md:hidden top-4 z-50 p-2 rounded-l;
   }
@@ -220,7 +207,6 @@
   .sidebar-desktop-social {
     @apply flex justify-center space-x-4;
   }
-  /* --- Mobile Menu Modal --- */
   .mobile-menu-modal {
     @apply md:hidden fixed top-0 left-0 z-[60] flex flex-col items-start p-4;
   }
@@ -230,8 +216,81 @@
   .mobile-menu-modal-content {
     @apply relative z-50 bg-[#111]/95 border border-[#204829] rounded-lg p-4 w-full max-w-md;
   }
+}
 
-  /* --- Contact Modal --- */
+/* ===== Sections: Skills, Articles, Projects, References ===== */
+@layer components {
+  .skills-container,
+  .references-container,
+  .articles-container,
+  .projects-container {
+    @apply p-4 md:p-8 md:pl-72 mt-16 md:mt-0;
+  }
+  .skills-title,
+  .articles-title,
+  .projects-title {
+    @apply text-2xl md:text-3xl font-bold text-primary;
+  }
+  .skills-grid,
+  .articles-grid,
+  .projects-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6;
+  }
+  .learning-title {
+    @apply text-2xl font-bold;
+    color: #f59e0b;
+  }
+  .learning-description {
+    border-color: var(--matrix-white);
+    color: var(--matrix-white);
+  }
+  .learning-progress {
+    @apply mt-2 h-2;
+    background-color: rgba(245, 158, 11, 0.2);
+  }
+  .learning-skill-desc {
+    @apply text-xs mt-1;
+    color: rgba(245, 158, 11, 0.8);
+  }
+}
+
+/* ===== Progress Bars ===== */
+@layer components {
+  .progress-bar {
+    @apply bg-gray-700 h-2 mt-2 rounded;
+  }
+  .progress-fill {
+    @apply h-2 rounded;
+  }
+  .progress-fill-primary {
+    @apply bg-[#22b455];
+  }
+  .progress-fill-learning {
+    @apply bg-[#F59E0B];
+  }
+  .learning-progress > div {
+    @apply bg-[#F59E0B];
+  }
+}
+
+/* ===== Tabs ===== */
+@layer components {
+  .tab-button {
+    @apply text-lg px-4 py-2 border-b-2 border-transparent transition-colors;
+    color: var(--matrix-white);
+  }
+  .tab-button.active-skills {
+    border-color: var(--matrix-primary);
+    color: var(--matrix-primary);
+  }
+  .tab-button.active-learning {
+    @apply border-[#F59E0B];
+    color: #f59e0b;
+  }
+}
+
+/* ===== Contact Modal ===== */
+@layer components {
   .contact-modal {
     @apply fixed inset-0 flex items-center justify-center z-50;
   }
@@ -247,38 +306,111 @@
   .contact-modal-content button[type="submit"]:hover {
     color: var(--matrix-light) !important;
   }
+}
 
-  /* --- Tabs --- */
-  .tab-button {
-    @apply text-lg px-4 py-2 border-b-2 border-transparent transition-colors;
+/* ===== Markdown Styles ===== */
+@layer components {
+  .markdown-body {
+    background-color: var(--matrix-bg);
     color: var(--matrix-white);
+    padding: 1rem;
+    border-radius: 0.5rem;
   }
-  .tab-button.active-skills {
-    border-color: var(--matrix-primary);
+  .markdown-body h1::first-line {
     color: var(--matrix-primary);
   }
-  .tab-button.active-learning {
-    @apply border-[#F59E0B];
+  .markdown-body h2 {
+    color: var(--matrix-light);
+  }
+  .markdown-body h3 {
+    color: var(--matrix-hover);
+  }
+  .markdown-body h4 {
+    color: var(--matrix-white);
+  }
+  .markdown-body strong {
     color: #f59e0b;
   }
+  .markdown-body pre,
+  .markdown-body code {
+    background-color: var(--matrix-darker);
+    color: var(--matrix-white);
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+  }
+  .markdown-body .mermaid {
+    margin: 2rem 0;
+    text-align: center;
+  }
+  .markdown-body .mermaid svg {
+    max-width: 100%;
+    height: auto;
+  }
+  .markdown-body ol {
+    list-style-type: decimal !important;
+    margin-left: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .markdown-body ol li {
+    margin-bottom: 0.25rem !important;
+  }
+  .markdown-body ul {
+    list-style-type: disc !important;
+    margin-left: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  .markdown-body ol li::marker {
+    color: var(--matrix-light) !important;
+    font-weight: bold !important;
+  }
+  .markdown-body a {
+    color: var(--matrix-primary) !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease-in-out;
+  }
+  .markdown-body a:hover {
+    color: var(--matrix-hover) !important;
+    border-bottom: 1px solid var(--matrix-hover) !important;
+  }
+  .markdown-body h1 .anchor-link,
+  .markdown-body h2 .anchor-link,
+  .markdown-body h3 .anchor-link,
+  .markdown-body h4 .anchor-link,
+  .markdown-body h5 .anchor-link,
+  .markdown-body h6 .anchor-link {
+    opacity: 0;
+    color: var(--matrix-primary) !important;
+    transition: opacity 0.2s ease;
+    border-bottom: none !important;
+  }
+  .markdown-body h1:hover .anchor-link,
+  .markdown-body h2:hover .anchor-link,
+  .markdown-body h3:hover .anchor-link,
+  .markdown-body h4:hover .anchor-link,
+  .markdown-body h5:hover .anchor-link,
+  .markdown-body h6:hover .anchor-link {
+    opacity: 1;
+  }
+  .markdown-body a:link,
+  .markdown-body a:visited,
+  .markdown-body a:active,
+  .markdown-body a:focus {
+    color: var(--matrix-primary) !important;
+  }
+  .matrix-link {
+    color: var(--matrix-primary) !important;
+    text-decoration: none !important;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+  }
+  .matrix-link:hover {
+    color: var(--matrix-hover) !important;
+    border-bottom: 1px solid var(--matrix-hover) !important;
+  }
 }
 
-/* ========= Keyframes ========= */
-
-@keyframes glow-btn {
-  from {
-    text-shadow:
-      0 0 10px var(--matrix-light),
-      0 0 20px var(--matrix-light);
-  }
-  to {
-    text-shadow:
-      0 0 20px var(--matrix-light),
-      0 0 30px var(--matrix-light);
-  }
-}
-
-/* ========= Responsive Adjustments ========= */
+/* ===== Responsive Adjustments ===== */
 @media (max-width: 768px) {
   .welcome-screen {
     @apply px-4 py-8 mt-16;
@@ -293,7 +425,6 @@
     @apply pl-0 md:pl-64;
   }
 }
-
 @media (max-height: 600px) and (orientation: landscape) {
   .welcome-screen {
     @apply static transform-none mt-20 mb-8;
@@ -303,147 +434,44 @@
   }
 }
 
-.matrix-button {
-  @apply gap-2 border-[#22b455] text-[#22b455] transform transition-all duration-300;
+/* ===== Animations & Keyframes ===== */
+@keyframes glow-btn {
+  from {
+    text-shadow:
+      0 0 10px var(--matrix-light),
+      0 0 20px var(--matrix-light);
+  }
+  to {
+    text-shadow:
+      0 0 20px var(--matrix-light),
+      0 0 30px var(--matrix-light);
+  }
 }
-.matrix-button:hover {
-  @apply hover:bg-[#204829]/20 hover:scale-[1.02];
-  box-shadow: 0 0 8px rgba(128, 206, 135, 0.3); /* rgba odpowiada wartościom: #80ce87 przy półprzezroczystości */
+@keyframes matrix-pulse {
+  0% {
+    opacity: 0;
+    box-shadow: 0 0 20px 3px rgba(34, 180, 85, 0.5);
+  }
+  50% {
+    opacity: 0.3;
+    box-shadow: 0 0 40px 8px rgba(34, 180, 85, 0.7);
+  }
+  100% {
+    opacity: 0;
+    box-shadow: 0 0 20px 3px rgba(34, 180, 85, 0.5);
+  }
 }
-
-.matrix-button-text {
-  @apply text-xs font-mono;
-  animation: glow-btn 2s ease-in-out infinite alternate;
+@keyframes glow {
+  from {
+    text-shadow:
+      0 0 10px var(--matrix-primary),
+      0 0 20px var(--matrix-dark),
+      0 0 30px var(--matrix-light);
+  }
+  to {
+    text-shadow:
+      0 0 20px var(--matrix-primary),
+      0 0 40px var(--matrix-dark),
+      0 0 60px var(--matrix-light);
+  }
 }
-
-.matrix-button-text h1 {
-  font-size: 0.75rem !important;
-  line-height: 1rem !important;
-}
-
-/* markodown hacks :P */
-
-.markdown-body {
-  background-color: var(--matrix-bg);
-  color: var(--matrix-white);
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
-
-
-.markdown-body h1::first-line {
-  color: var(--matrix-primary);
-}
-
-.markdown-body h2 {
-  color: var(--matrix-light);
-}
-
-.markdown-body h3 {
-  color: var(--matrix-hover);
-}
-
-.markdown-body h4 {
-  color: var(--matrix-white);
-}
-
-.markdown-body strong {
-  color: #f59e0b;
-}
-
-.markdown-body pre,
-.markdown-body code {
-  background-color: var(--matrix-darker);
-  color: var(--matrix-white);
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-}
-
-.markdown-body .mermaid {
-  margin: 2rem 0;
-  text-align: center;
-}
-
-.markdown-body .mermaid svg {
-  max-width: 100%;
-  height: auto;
-}
-
-.markdown-body ol {
-  list-style-type: decimal !important;
-  margin-left: 1.5rem !important;
-  margin-bottom: 1rem !important;
-}
-
-.markdown-body ol li {
-  margin-bottom: 0.25rem !important;
-}
-
-.markdown-body ul {
-  list-style-type: disc !important;
-  margin-left: 1.5rem !important;
-  margin-bottom: 1rem !important;
-}
-
-/* Upewnij się, że liczby są widoczne */
-.markdown-body ol li::marker {
-  color: var(--matrix-light) !important;
-  font-weight: bold !important;
-}
-
-/* Style dla linków Markdown */
-.markdown-body a {
-  color: var(--matrix-primary) !important;
-  text-decoration: none !important;
-  border-bottom: 1px solid transparent;
-  transition: all 0.2s ease-in-out;
-}
-
-.markdown-body a:hover {
-  color: var(--matrix-hover) !important;
-  border-bottom: 1px solid var(--matrix-hover) !important;
-}
-
-/* Style dla kotwic nagłówków */
-.markdown-body h1 .anchor-link,
-.markdown-body h2 .anchor-link,
-.markdown-body h3 .anchor-link,
-.markdown-body h4 .anchor-link,
-.markdown-body h5 .anchor-link,
-.markdown-body h6 .anchor-link {
-  opacity: 0;
-  color: var(--matrix-primary) !important;
-  transition: opacity 0.2s ease;
-  border-bottom: none !important;
-}
-
-.markdown-body h1:hover .anchor-link,
-.markdown-body h2:hover .anchor-link,
-.markdown-body h3:hover .anchor-link,
-.markdown-body h4:hover .anchor-link,
-.markdown-body h5:hover .anchor-link,
-.markdown-body h6:hover .anchor-link {
-  opacity: 1;
-}
-
-/* Nadpisanie wszystkich stylów dla linków w github-markdown-css */
-.markdown-body a:link,
-.markdown-body a:visited,
-.markdown-body a:active,
-.markdown-body a:focus {
-  color: var(--matrix-primary) !important;
-}
-
-/* Matrix link style */
-.matrix-link {
-  color: var(--matrix-primary) !important;
-  text-decoration: none !important; 
-  border-bottom: 1px solid transparent;
-  transition: color 0.2s, border-bottom 0.2s;
-}
-
-.matrix-link:hover {
-  color: var(--matrix-hover) !important;
-  border-bottom: 1px solid var(--matrix-hover) !important;
-}
-
