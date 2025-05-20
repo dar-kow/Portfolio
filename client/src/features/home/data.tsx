@@ -8,8 +8,8 @@ export const homeMessages = {
         en: "Check out my projects",
     },
     cv: {
-        pl: "Przejrzyj moje CV",
-        en: "View my resume",
+        pl: "Przejrzyj moje artykuły",
+        en: "Browse my articles",
     },
     contact: {
         pl: "Skontaktuj się ze mną",
