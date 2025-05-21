@@ -60,6 +60,10 @@ const ArticlePage = () => {
                 import(`../../pages/ui-tests-playwright-maf${fileSuffix}.md?raw`)
                     .then((mod) => mod.default)
                     .catch(() => import(`../../pages/ui-tests-playwright-maf.md?raw`).then((mod) => mod.default)),
+            "playwright-assertions-when-you-need-await": () =>
+                import(`../../pages/playwright-assertions-when-you-need-await${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/playwright-assertions-when-you-need-await.md?raw`).then((mod) => mod.default)),
         };
     }, [fileSuffix]);
 
