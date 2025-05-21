@@ -89,7 +89,7 @@ export const articles: Article[] = [
       pl: "Testowanie komponentów React z Testing Library vs Playwright - co wybrać i kiedy?",
       en: "Testing React Components with Testing Library vs Playwright – Which One to Choose and When?",
     },
-   link: "/articles/react-testing-library-vs-playwright",
+    link: "/articles/react-testing-library-vs-playwright",
   },
   {
     title: {
@@ -151,5 +151,16 @@ export const articles: Article[] = [
     },
     link: "/articles/automatic-update-dates-is-project-portfolio",
   },
-
+  {
+    title: {
+      pl: "Asercje w Playwright: Kiedy faktycznie potrzebujesz await?",
+      en: "Assertions in Playwright: When Do You Actually Need await?",
+    },
+    date: "2025-05-20",
+    description: {
+      pl: "Analiza techniczna dotycząca używania słowa kluczowego await z asercjami w Playwright. Artykuł obala popularny mit, że wszystkie asercje wymagają await, prezentując szczegółową analizę różnych typów asercji oraz wskazówki, kiedy await jest niezbędne, a kiedy niepotrzebne.",
+      en: "Technical analysis of using the await keyword with assertions in Playwright. This article debunks the common myth that all assertions require await, presenting a detailed breakdown of different assertion types and clear guidelines on when await is necessary and when it's redundant.",
+    },
+    link: "/articles/playwright-assertions-when-you-need-await",
+  },
 ];
