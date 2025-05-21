@@ -1,17 +1,30 @@
 import ReactGA from "react-ga4";
 
-// Funkcja inicjalizująca Google Analytics
+// Function to initialize Google Analytics
 export const initializeGA = (appName: string = "main-site"): void => {
-  // Inicjalizujemy GA tylko w środowisku produkcyjnym lub jeśli uruchomiono lokalne testowanie GA
+  const gaId = import.meta.env.VITE_GA_ID;
+  if (
+    !gaId ||
+    gaId === "" ||
+    gaId === "GA_MEASUREMENT_ID" // also skip if left as placeholder
+  ) {
+    // Optionally log a warning in development
+    if (import.meta.env.MODE !== "production") {
+      console.warn("Google Analytics not initialized: VITE_GA_ID is missing.");
+    }
+    return;
+  }
+
+  // Initialize GA only in production or if local GA testing is enabled
   if (import.meta.env.MODE === "production" || import.meta.env.VITE_ENABLE_GA_DEV === "true") {
-    ReactGA.initialize(import.meta.env.VITE_GA_ID, {
+    ReactGA.initialize(gaId, {
       gaOptions: {
         siteSpeedSampleRate: 100,
         cookieDomain: "auto",
       },
     });
 
-    // Ustawienie parametru app_name dla wszystkich zdarzeń
+    // Set app_name parameter for all events
     ReactGA.set({
       app_name: appName,
     });
@@ -22,7 +35,7 @@ export const initializeGA = (appName: string = "main-site"): void => {
   }
 };
 
-// Funkcja do śledzenia odsłon stron
+// Function to track page views
 export const trackPageView = (path: string): void => {
   if (import.meta.env.MODE === "production" || import.meta.env.VITE_ENABLE_GA_DEV === "true") {
     ReactGA.send({ hitType: "pageview", page: path });
@@ -30,7 +43,7 @@ export const trackPageView = (path: string): void => {
   }
 };
 
-// Funkcja do śledzenia zdarzeń
+// Function to track events
 export const trackEvent = (
   category: string,
   action: string,
