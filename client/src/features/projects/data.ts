@@ -27,13 +27,28 @@ export const projectsMessages: ProjectsMessages = {
 
 export const projects: Project[] = [
   {
-    title: { pl: "Testy E2E aplikacji MAF w Playwright", en: "E2E Testing of the MAF App with Playwright" },
+    title: {
+      pl: "K6 Performance Dashboard with live terminal output",
+      en: "K6 Performance Dashboard z wbudowanym terminalem",
+    },
+    description: {
+      pl: "K6 Performance Dashboard to kompleksowa aplikacja internetowa klasy korporacyjnej, opracowana w oparciu o zasady Clean Architecture, służąca do wizualizacji, zarządzania i analizowania wyników testów wydajnościowych K6. Aplikacja została rozszerzona o live terminal oraz możliwość klonowania repozytoriów z testami, umożliwiając przeprowadzanie testów wydajnościowych bez konieczności lokalnego środowiska DEV/QA.",
+      en: "K6 Performance Dashboard is a comprehensive, enterprise-grade web application built with Clean Architecture principles for visualizing, managing, and analyzing K6 performance test results. The application has been extended with a live terminal and the ability to clone repositories with tests, allowing performance tests to be conducted without the need for a local DEV/QA environment.",
+    },
+    link: "https://github.com/dar-kow/k6-dashboard",
+    demo: "",
+  },
+  {
+    title: {
+      pl: "Testy E2E aplikacji MAF w Playwright",
+      en: "E2E Testing of the MAF App with Playwright",
+    },
     description: {
       pl: "Zautomatyzowany zestaw testów end-to-end przygotowany w Playwright do weryfikacji kluczowych funkcji mojej autorskiej aplikacji MAF. Skupia się na testowaniu interfejsu, walidacji danych i stabilności działania w różnych scenariuszach użytkownika.",
       en: "An automated end-to-end test suite built with Playwright to verify the core features of my custom MAF application. It focuses on UI testing, data validation, and functional stability across various user scenarios.",
     },
     link: "https://github.com/dar-kow/maf-e2e-pw",
-    demo:""
+    demo: "",
   },
   {
     title: { pl: "Projekt MAF - Moja Aplikacja Faktur", en: "Project MAF" },
@@ -54,13 +69,16 @@ export const projects: Project[] = [
     demo: "https://portfolio.sdet.pl",
   },
   {
-    title: { pl: "Confluence Headers Manager -  zarządzanie nagłówkami.", en: "Confluence Headers Manager - header management." },
+    title: {
+      pl: "Confluence Headers Manager -  zarządzanie nagłówkami.",
+      en: "Confluence Headers Manager - header management.",
+    },
     description: {
       pl: "To inteligentne narzędzie rozwiązujące jeden z najbardziej uciążliwych problemów użytkowników Confluence",
       en: "An intelligent tool that solves one of the most frustrating problems for Confluence users",
     },
     link: "https://github.com/dar-kow/confluence-headers-manager-pro",
-    demo:"",
+    demo: "",
     // demo: "https://github.com/dar-kow/confluence-headers-manager-pro",
   },
   {
@@ -73,12 +91,15 @@ export const projects: Project[] = [
     demo: "/articles/api-tests-playwright-maf",
   },
   {
-    title: { pl: "SDET - Strefa dla testerów, których korci na więcej", en: "SDET - The Zone for Testers Who Want More" },
+    title: {
+      pl: "SDET - Strefa dla testerów, których korci na więcej",
+      en: "SDET - The Zone for Testers Who Want More",
+    },
     description: {
       pl: "Projekt w fazie budowy. Już wkrótce pokaże, jak zbudować prostą, ale skuteczną stronę startową inicjującą projekt. Założeniem jest nie tylko stworzenie atrakcyjnego interfejsu, ale także zbieranie subskrybentów i zaproszenie chętnych do współtworzenia. W tle działa solidny backend z panelem administratora – zarządzanie danymi, autoryzacja oparta o JWT i baza PostgreSQL gwarantują nowoczesne podejście. Start odliczania to pierwszy, ale najważniejszy krok, który motywuje do działania. Stay tuned!",
       en: "Project Under Construction. Coming soon: a showcase on how to build a simple yet effective landing page to kickstart your project. The aim is not only to create an attractive interface but also to gather subscribers and invite interested collaborators. Behind the scenes, a robust backend featuring an admin panel—with data management, JWT-based authentication, and PostgreSQL—ensures a modern approach. The countdown to launch is the first, and most important, step that motivates action. Stay tuned!",
     },
-    link:"",
+    link: "",
     // link: "https://github.com/dar-kow/portfolio",
     demo: "https://sdet.pl",
   },
