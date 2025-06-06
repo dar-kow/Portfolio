@@ -1,30 +1,17 @@
 import ReactGA from "react-ga4";
 
-// Function to initialize Google Analytics
+// Funkcja inicjalizująca Google Analytics
 export const initializeGA = (appName: string = "main-site"): void => {
-  const gaId = import.meta.env.VITE_GA_ID;
-  if (
-    !gaId ||
-    gaId === "" ||
-    gaId === "GA_MEASUREMENT_ID" // also skip if left as placeholder
-  ) {
-    // Optionally log a warning in development
-    if (import.meta.env.MODE !== "production") {
-      console.warn("Google Analytics not initialized: VITE_GA_ID is missing.");
-    }
-    return;
-  }
-
-  // Initialize GA only in production or if local GA testing is enabled
-  if (import.meta.env.MODE === "production" || import.meta.env.VITE_ENABLE_GA_DEV === "true") {
-    ReactGA.initialize(gaId, {
+  // Inicjalizujemy GA tylko w środowisku produkcyjnym lub jeśli uruchomiono lokalne testowanie GA
+  if (process.env.NODE_ENV === "production" || process.env.REACT_APP_ENABLE_GA_DEV === "true") {
+    ReactGA.initialize("G-563H76S9WB", {
       gaOptions: {
         siteSpeedSampleRate: 100,
         cookieDomain: "auto",
       },
     });
 
-    // Set app_name parameter for all events
+    // Ustawienie parametru app_name dla wszystkich zdarzeń
     ReactGA.set({
       app_name: appName,
     });
@@ -35,22 +22,22 @@ export const initializeGA = (appName: string = "main-site"): void => {
   }
 };
 
-// Function to track page views
+// Funkcja do śledzenia odsłon stron
 export const trackPageView = (path: string): void => {
-  if (import.meta.env.MODE === "production" || import.meta.env.VITE_ENABLE_GA_DEV === "true") {
+  if (process.env.NODE_ENV === "production" || process.env.REACT_APP_ENABLE_GA_DEV === "true") {
     ReactGA.send({ hitType: "pageview", page: path });
     // console.log(`Page view tracked: ${path}`);
   }
 };
 
-// Function to track events
+// Funkcja do śledzenia zdarzeń
 export const trackEvent = (
   category: string,
   action: string,
   label?: string,
   value?: number,
 ): void => {
-  if (import.meta.env.MODE === "production" || import.meta.env.VITE_ENABLE_GA_DEV === "true") {
+  if (process.env.NODE_ENV === "production" || process.env.REACT_APP_ENABLE_GA_DEV === "true") {
     ReactGA.event({
       category,
       action,
