@@ -26,6 +26,18 @@ export const projectsMessages: ProjectsMessages = {
 };
 
 export const projects: Project[] = [
+    {
+    title: {
+      pl: "Claude VSCode Controller - Wieloplatformowy Most AI-IDE",
+      en: "Claude VSCode Controller - Cross-Platform AI Development Bridge",
+    },
+    description: {
+      pl: "Zaprojektowałem zaawansowaną integrację czasu rzeczywistego między Claude Desktop AI a VSCode wykorzystując Extension API, komunikację WebSocket oraz Model Context Protocol. System dostarcza 30+ natywnych komend IDE poprzez interfejs naturalnego języka, eliminując zależności CLI dla płynnego doświadczenia użytkownika. Pokonałem złożone wyzwania kompatybilności Linux Extension Host, opracowując automatyczne poprawki oraz kompleksową strategię wieloplatformowego wdrażania.",
+      en: "Engineered sophisticated real-time integration between Claude Desktop AI and VSCode using Extension API, WebSocket communication, and Model Context Protocol. Delivers 30+ native IDE commands through natural language interface, eliminating CLI dependencies for seamless user experience. Conquered complex Linux Extension Host compatibility challenges, developing automated fixes and comprehensive cross-platform deployment strategy.",
+    },
+    link: "https://github.com/dar-kow/claude-vscode-controller",
+    demo: "",
+  },
   {
     title: {
       pl: "K6 Performance Dashboard with live terminal output",
