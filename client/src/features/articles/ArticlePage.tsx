@@ -64,6 +64,10 @@ const ArticlePage = () => {
                 import(`../../pages/playwright-assertions-when-you-need-await${fileSuffix}.md?raw`)
                     .then((mod) => mod.default)
                     .catch(() => import(`../../pages/playwright-assertions-when-you-need-await.md?raw`).then((mod) => mod.default)),
+            "claude_vscode_article": () =>
+                import(`../../pages/claude_vscode_article${fileSuffix}.md?raw`)
+                    .then((mod) => mod.default)
+                    .catch(() => import(`../../pages/claude_vscode_article.md?raw`).then((mod) => mod.default)),
         };
     }, [fileSuffix]);
 
