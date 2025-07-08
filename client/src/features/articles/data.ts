@@ -163,4 +163,16 @@ export const articles: Article[] = [
     },
     link: "/articles/playwright-assertions-when-you-need-await",
   },
+  {
+    title: {
+      pl: "Gdy Extension Host odmawia posłuszeństwa - czyli jak stworzyliśmy Claude VSCode Controller na Linux",
+      en: "When the Extension Host Refuses to Cooperate – How We Built Claude VSCode Controller for Linux",
+    },
+    date: "2025-07-08",
+    description: {
+      pl: "Czy kiedykolwiek miałeś moment, gdy potrzebujesz czegoś tak bardzo, że gotów jesteś to stworzyć od zera? Ja właśnie przeżyłem taki moment. Historia, którą wam opowiem, to nie tylko techniczny case study, ale przede wszystkim opowieść o tym, że czasem najbardziej frustrujące problemy prowadzą do najciekawszych rozwiązań.",
+      en: "Have you ever had a moment when you needed something so badly that you were willing to create it from scratch? I just experienced such a moment. The story I'm going to tell you is not only a technical case study but, above all, a tale of how sometimes the most frustrating problems lead to the most interesting solutions.",
+    },
+    link: "/articles/claude_vscode_article",
+  },
 ];
