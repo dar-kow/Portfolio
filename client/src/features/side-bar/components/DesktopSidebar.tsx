@@ -121,7 +121,7 @@ function DesktopSidebar({ location, setIsContactOpen, toggleLang, lang }: Deskto
                         onClick={toggleLang}
                         className="lang-toggle-button border border-[var(--matrix-primary)] rounded px-3 py-1 text-sm text-[var(--matrix-primary)] bg-[var(--matrix-bg)] hover:bg-[var(--matrix-dark)] hover:text-[var(--matrix-hover)] transition-colors"
                     >
-                        {lang.toUpperCase()}
+                        {lang === 'pl' ? 'EN' : 'PL'}
                     </button>
                 </div>
 
