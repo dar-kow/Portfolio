@@ -187,7 +187,7 @@ function MobileMenu({
                     onClick={toggleLang}
                     className="fixed bottom-4 right-4 z-50 px-4 py-2 rounded-full text-sm font-medium bg-[var(--matrix-bg)] border-2 border-[var(--matrix-primary)] text-[var(--matrix-primary)] hover:bg-[var(--matrix-dark)] hover:text-[var(--matrix-hover)] transition-colors shadow-lg"
                 >
-                    {lang.toUpperCase()}
+                    {lang === 'pl' ? 'EN' : 'PL'}
                 </button>
             </div>
         </>
