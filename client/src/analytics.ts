@@ -1,33 +1,31 @@
 import ReactGA from "react-ga4";
 
+const isGAEnabled = () => {
+  const isProd = import.meta.env.MODE === "production";
+  const enableDev = import.meta.env.VITE_ENABLE_GA_DEV === "true";
+  return isProd || enableDev;
+};
+
 // Funkcja inicjalizująca Google Analytics
 export const initializeGA = (appName: string = "main-site"): void => {
-  // Inicjalizujemy GA tylko w środowisku produkcyjnym lub jeśli uruchomiono lokalne testowanie GA
-  if (process.env.NODE_ENV === "production" || process.env.REACT_APP_ENABLE_GA_DEV === "true") {
-    ReactGA.initialize("G-563H76S9WB", {
-      gaOptions: {
-        siteSpeedSampleRate: 100,
-        cookieDomain: "auto",
-      },
-    });
+  if (!isGAEnabled()) return;
 
-    // Ustawienie parametru app_name dla wszystkich zdarzeń
-    ReactGA.set({
-      app_name: appName,
-    });
+  ReactGA.initialize("G-563H76S9WB", {
+    gaOptions: {
+      siteSpeedSampleRate: 100,
+      cookieDomain: "auto",
+    },
+  });
 
-    // console.log(`Google Analytics initialized for app: ${appName}`);
-  } else {
-    // console.log('Google Analytics not initialized in development mode');
-  }
+  ReactGA.set({
+    app_name: appName,
+  });
 };
 
 // Funkcja do śledzenia odsłon stron
 export const trackPageView = (path: string): void => {
-  if (process.env.NODE_ENV === "production" || process.env.REACT_APP_ENABLE_GA_DEV === "true") {
-    ReactGA.send({ hitType: "pageview", page: path });
-    // console.log(`Page view tracked: ${path}`);
-  }
+  if (!isGAEnabled()) return;
+  ReactGA.send({ hitType: "pageview", page: path });
 };
 
 // Funkcja do śledzenia zdarzeń
@@ -37,13 +35,11 @@ export const trackEvent = (
   label?: string,
   value?: number,
 ): void => {
-  if (process.env.NODE_ENV === "production" || process.env.REACT_APP_ENABLE_GA_DEV === "true") {
-    ReactGA.event({
-      category,
-      action,
-      label,
-      value,
-    });
-    // console.log(`Event tracked: ${category} - ${action}`);
-  }
+  if (!isGAEnabled()) return;
+  ReactGA.event({
+    category,
+    action,
+    label,
+    value,
+  });
 };
