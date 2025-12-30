@@ -20,3 +20,24 @@ export const christmasMessages = {
     en: "All the best!",
   },
 };
+
+/**
+ * Wiadomości sylwestrowe i noworoczne
+ */
+export const newYearMessages = {
+  // Wyświetlane 31.12 pod "2026"
+  countdown: {
+    pl: "nadchodzi",
+    en: "is coming",
+  },
+  // Wyświetlane 01.01 - 06.01
+  greeting: {
+    pl: "Szczęśliwego Nowego Roku",
+    en: "Happy New Year",
+  },
+  year: "2026",
+  wishes: {
+    pl: "Wszystkiego najlepszego!",
+    en: "All the best!",
+  },
+};
