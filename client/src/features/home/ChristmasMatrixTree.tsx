@@ -101,7 +101,7 @@ const ChristmasMatrixTree: React.FC<ChristmasMatrixTreeProps> = ({
 
     // Helper to get tree position
     const getTreePosition = () => {
-      const sidebarWidth = canvasWidth >= 768 ? 288 : 0;
+      const sidebarWidth = canvasWidth >= 768 ? 208 : 0; // w-52 = 208px
       const availableWidth = canvasWidth - sidebarWidth;
       const treeCenterX = sidebarWidth + Math.floor(availableWidth / 2);
       const treeTopY = Math.floor(canvasHeight * 0.06);

@@ -23,7 +23,7 @@ function References(): JSX.Element {
     return (
         <>
             <MatrixEffect immediate bgOpacity={0.2} matrixColors={getMatrixColors()} />
-            <div className="references-container relative z-10 p-4 md:p-8 md:pl-72 space-y-6">
+            <div className="references-container relative z-10 p-4 md:p-8 md:pl-52 space-y-6">
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-8">
                     <h1 className="references-title text-[var(--matrix-primary)] text-3xl font-bold">
                         {lang === "pl" ? "Referencje" : "References"}
