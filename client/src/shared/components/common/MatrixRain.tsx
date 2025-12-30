@@ -5,25 +5,32 @@ interface MatrixEffectProps {
   bgOpacity?: number;
   immediate?: boolean;
   matrixColors?: string[];
+  canvasId?: string;
 }
 
 const MatrixEffect: React.FC<MatrixEffectProps> = ({
   color = "#22b455",
   bgOpacity = 0.05,
   immediate = false,
-  matrixColors, // optional array of colors
+  matrixColors,
+  canvasId = "matrixCanvas",
 }) => {
   const bgOpacityRef = useRef(bgOpacity);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const paletteRef = useRef<string[]>([]);
 
-  const getMatrixColors = () => {
+  const resolvePalette = () => {
+    if (matrixColors && matrixColors.length > 0) return matrixColors;
     const rootStyles = getComputedStyle(document.documentElement);
-    return [
+    const cssPalette = [
       rootStyles.getPropertyValue("--matrix-dark").trim(),
       rootStyles.getPropertyValue("--matrix-primary").trim(),
       rootStyles.getPropertyValue("--matrix-light").trim(),
       rootStyles.getPropertyValue("--matrix-hover").trim(),
-    ];
+    ].filter(Boolean);
+
+    const palette = color ? [color, ...cssPalette] : cssPalette;
+    return palette.length ? palette : ["#22b455"];
   };
 
   useEffect(() => {
@@ -31,9 +38,12 @@ const MatrixEffect: React.FC<MatrixEffectProps> = ({
   }, [bgOpacity]);
 
   useEffect(() => {
-    const canvas = document.getElementById("matrixCanvas") as HTMLCanvasElement;
+    paletteRef.current = resolvePalette();
+  }, [matrixColors, color]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
     if (!canvas) return;
-    canvasRef.current = canvas;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
@@ -43,44 +53,36 @@ const MatrixEffect: React.FC<MatrixEffectProps> = ({
     const nums = "0123456789";
     const letters = katakana + latin + nums;
 
-    let columns = Math.floor(window.innerWidth / 20);
-    // If immediate is true, start drops at random positions, otherwise start at 1
-    const drops: number[] = immediate
-      ? Array(columns)
-        .fill(0)
-        .map(() => Math.floor((Math.random() * window.innerHeight) / 20))
-      : Array(columns).fill(1);
+    const fontSize = 20;
+    let columns = 0;
+    let drops: number[] = [];
 
-    // Set canvas size and reset drops on resize
     const setCanvasSize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        columns = Math.floor(canvasRef.current.width / 20);
-        for (let i = 0; i < columns; i++) {
-          drops[i] = immediate ? Math.floor((Math.random() * canvasRef.current.height) / 20) : 1;
-        }
-      }
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      columns = Math.floor(canvas.width / fontSize);
+      drops = immediate
+        ? Array(columns)
+            .fill(0)
+            .map(() => Math.floor((Math.random() * canvas.height) / fontSize))
+        : Array(columns).fill(1);
     };
 
     setCanvasSize();
 
-    // Draw the Matrix rain effect
     const draw = () => {
-      if (!canvasRef.current || !ctx) return;
       ctx.fillStyle = `rgba(0, 0, 0, ${bgOpacityRef.current})`;
-      ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Use matrixColors if provided, otherwise getMatrixColors()
-      const colors = matrixColors ?? getMatrixColors();
+      const colors = paletteRef.current.length ? paletteRef.current : [color];
+      ctx.font = `${fontSize}px monospace`;
 
       drops.forEach((y, i) => {
         const text = letters.charAt(Math.floor(Math.random() * letters.length));
         ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-        ctx.font = "20px monospace";
-        ctx.fillText(text, i * 20, y * 20);
+        ctx.fillText(text, i * fontSize, y * fontSize);
 
-        if (y * 20 > canvasRef.current!.height && Math.random() > 0.975) {
+        if (y * fontSize > canvas.height && Math.random() > 0.975) {
           drops[i] = 0;
         }
         drops[i]++;
@@ -92,17 +94,26 @@ const MatrixEffect: React.FC<MatrixEffectProps> = ({
     };
 
     window.addEventListener("resize", handleResize);
-    const intervalId = setInterval(draw, 50);
+    let lastFrame = performance.now();
+    const targetMs = 50; // ~20 FPS as before
+    let animationId = requestAnimationFrame(function loop(now) {
+      if (now - lastFrame >= targetMs) {
+        draw();
+        lastFrame = now;
+      }
+      animationId = requestAnimationFrame(loop);
+    });
 
     return () => {
-      clearInterval(intervalId);
+      cancelAnimationFrame(animationId);
       window.removeEventListener("resize", handleResize);
     };
   }, [immediate, matrixColors]);
 
   return (
     <canvas
-      id="matrixCanvas"
+      id={canvasId}
+      ref={canvasRef}
       className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"
     />
   );
