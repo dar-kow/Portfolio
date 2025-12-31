@@ -19,7 +19,7 @@ export const SEASONAL_MODE_ENABLED = true;
  * DEBUG: Wymuś konkretny tryb (ustaw null dla automatycznego)
  * Opcje: 'christmas' | 'newYearEve' | 'newYear' | 'normal' | null
  */
-export const FORCE_MODE: SeasonalMode | null = null // <- zmień tu na 'newYear' żeby przetestować
+export const FORCE_MODE: SeasonalMode | null = null // <- null = automatyczny tryb na podstawie daty
 
 /**
  * Określa aktualny tryb sezonowy na podstawie daty
@@ -40,10 +40,10 @@ export const getSeasonalMode = (): SeasonalMode => {
 
   // Grudzień
   if (month === 11) {
-    if (day <= 29) {
+    if (day <= 30) {
       return 'christmas'; // Do 30.12 - choinka
     }
-    if (day === 30) {
+    if (day === 31) {
       return 'newYearEve'; // 31.12 - sylwester
     }
   }
