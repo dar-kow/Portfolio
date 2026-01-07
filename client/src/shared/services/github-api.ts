@@ -74,6 +74,25 @@ export function extractRepoInfo(url: string): { owner: string; repo: string } | 
       return dateString;
     }
   }
+
+  /**
+   * Check if commit date is within the last N days
+   * @param dateString ISO date string
+   * @param days Number of days to check (default 7)
+   * @returns true if commit is recent
+   */
+  export function isRecentCommit(dateString: string | undefined, days: number = 7): boolean {
+    if (!dateString) return false;
+    try {
+      const commitDate = new Date(dateString);
+      const now = new Date();
+      const diffTime = Math.abs(now.getTime() - commitDate.getTime());
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays <= days;
+    } catch {
+      return false;
+    }
+  }
   
   // Simple in-memory cache for commit dates
   const commitDateCache: Record<string, { date: string; timestamp: number }> = {};

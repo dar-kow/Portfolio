@@ -26,7 +26,19 @@ export const projectsMessages: ProjectsMessages = {
 };
 
 export const projects: Project[] = [
-    {
+  {
+    title: {
+      pl: "DEMO BI - Panel Business Intelligence",
+      en: "DEMO BI - Business Intelligence Dashboard",
+    },
+    description: {
+      pl: "Nowoczesna, gotowa do wdrożenia platforma Business Intelligence zbudowana od podstaw. Stack: Next.js 14, TypeScript, Tailwind CSS, PostgreSQL 15, Docker. Funkcje: dashboardy KPI w czasie rzeczywistym, system zarządzania klientami, moduł analityki AI (prognozowanie, wykrywanie anomalii), kontrola dostępu oparta na rolach, tryb ciemny/jasny, responsywny design glassmorphism.",
+      en: "A modern, production-ready Business Intelligence platform built from scratch. Stack: Next.js 14, TypeScript, Tailwind CSS, PostgreSQL 15, Docker. Features: real-time KPI dashboards, client management system, AI-powered analytics module (forecasting, anomaly detection), role-based access control, dark/light theme, fully responsive glassmorphism design.",
+    },
+    link: "https://github.com/dar-kow/demo-bi",
+    demo: "http://54.36.174.173:3200/",
+  },
+  {
     title: {
       pl: "Claude VSCode Controller - Wieloplatformowy Most AI-IDE",
       en: "Claude VSCode Controller - Cross-Platform AI Development Bridge",

@@ -14,7 +14,7 @@ import { useLanguage } from "../../shared/components/common/LanguageContext";
 import { projectsMessages, projects as initialProjects, Project } from "./data";
 import MatrixEffect from "@/shared/components/common/MatrixRain";
 import { getMatrixColors } from "../articles/Articles";
-import { extractRepoInfo, fetchLastCommitDateWithCache, formatCommitDate } from "@/shared/services/github-api";
+import { extractRepoInfo, fetchLastCommitDateWithCache, formatCommitDate, isRecentCommit } from "@/shared/services/github-api";
 
 const Projects = () => {
   const { lang } = useLanguage();
@@ -76,8 +76,13 @@ const Projects = () => {
               >
                 <Card className="cursor-pointer bg-[var(--matrix-bg)] border border-[var(--matrix-dark)] hover:shadow-[0_0_8px_#80ce87] transition-all duration-200 flex flex-col h-full">
                   <CardHeader>
-                    <CardTitle className="text-[var(--matrix-white)] text-xl font-bold">
+                    <CardTitle className="text-[var(--matrix-white)] text-xl font-bold flex items-center gap-2 flex-wrap">
                       {project.title[lang]}
+                      {isRecentCommit(project.lastCommitDate) && (
+                        <span className="inline-flex items-center px-2 py-0.5 text-xs font-bold rounded bg-[#22b455] text-[var(--matrix-bg)]">
+                          {lang === "en" ? "NEW" : "NOWY"}
+                        </span>
+                      )}
                     </CardTitle>
                     <CardDescription className="text-[var(--matrix-white)] text-sm md:text-base whitespace-pre-line">
                       {project.description[lang]}

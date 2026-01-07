@@ -6,6 +6,8 @@ import { menuItems, contactMessages, socialLinks } from "../data";
 import { useLanguage } from "../../../shared/components/common/LanguageContext";
 import React, { useState, useEffect } from "react";
 import { articles } from "@/features/articles/data";
+import { projects } from "@/features/projects/data";
+import { extractRepoInfo, fetchLastCommitDateWithCache, isRecentCommit } from "@/shared/services/github-api";
 
 interface MobileMenuProps {
     isOpen: boolean;
@@ -25,6 +27,7 @@ function MobileMenu({
     const { lang, toggleLang } = useLanguage();
     const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
     const [hasNewArticles, setHasNewArticles] = useState(false);
+    const [hasNewProjects, setHasNewProjects] = useState(false);
 
     useEffect(() => {
         // Check if any articles are less than 7 days old
@@ -37,6 +40,30 @@ function MobileMenu({
         });
 
         setHasNewArticles(hasNew);
+    }, []);
+
+    useEffect(() => {
+        // Check if any projects have recent commits (< 7 days)
+        const checkProjectUpdates = async () => {
+            for (const project of projects) {
+                if (!project.link || project.link.trim() === '') continue;
+
+                const repoInfo = extractRepoInfo(project.link);
+                if (!repoInfo) continue;
+
+                try {
+                    const lastCommitDate = await fetchLastCommitDateWithCache(repoInfo.owner, repoInfo.repo);
+                    if (lastCommitDate && isRecentCommit(lastCommitDate)) {
+                        setHasNewProjects(true);
+                        return;
+                    }
+                } catch (error) {
+                    console.error(`Error checking commit date for ${project.title.en}:`, error);
+                }
+            }
+        };
+
+        checkProjectUpdates();
     }, []);
 
     const toggleSubMenu = (path: string, e: React.MouseEvent) => {
@@ -144,6 +171,13 @@ function MobileMenu({
                                                         {item.path === "/articles" && hasNewArticles && (
                                                             <span className="ml-2 flex h-5 px-1.5 items-center justify-center text-xs font-bold rounded bg-[#22b455] text-[var(--matrix-bg)]">
                                                                 {lang === "en" ? "NEW" : "NOWY"}
+                                                            </span>
+                                                        )}
+
+                                                        {/* New projects notification */}
+                                                        {item.path === "/projects" && hasNewProjects && (
+                                                            <span className="ml-2 flex h-5 px-1.5 items-center justify-center text-xs font-bold rounded bg-[#22b455] text-[var(--matrix-bg)]">
+                                                                {lang === "en" ? "UPD" : "UPD"}
                                                             </span>
                                                         )}
                                                     </div>
